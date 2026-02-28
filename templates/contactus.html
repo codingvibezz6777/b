@@ -1,0 +1,330 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport"/>
+<title>StarBooking - Contact Us</title>
+<link rel="icon" type="image/x-icon" href="{% static 'images/icoweb.png' %}">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f2cc0d",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#121212",
+                        "card-dark": "#1e1e1e",
+                        "border-gold": "#494222",
+                    },
+                    fontFamily: {
+                        "display": ["Be Vietnam Pro", "sans-serif"],
+                        "serif": ["Playfair Display", "serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(242, 204, 13, 0.1);
+        }
+        .gold-gradient-text {
+            background: linear-gradient(to right, #f2cc0d, #bda10a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        input, textarea, select {
+            background-color: #1a1a1a !important;
+            border-color: #494222 !important;
+            color: white !important;
+        }
+        input:focus, textarea:focus, select:focus {
+            border-color: #f2cc0d !important;
+            ring: 1px !important;
+            ring-color: #f2cc0d !important;
+            outline: none !important;
+        }
+        /* Smooth mobile menu transitions */
+        .mobile-menu {
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+        }
+        body {
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+<body class="bg-background-dark font-display text-white transition-colors duration-300 overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Header with mobile menu -->
+<header class="sticky top-0 z-50 w-full border-b border-border-gold bg-background-dark/80 backdrop-blur-md px-4 sm:px-6 md:px-8 lg:px-10 py-3 sm:py-4">
+<div class="max-w-[1440px] mx-auto">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 sm:gap-3 md:gap-4 text-white">
+<div class="size-5 sm:size-6 text-primary">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-white text-lg sm:text-xl font-bold leading-tight tracking-[-0.015em]">StarBooking</h2>
+</div>
+
+<!-- Desktop Navigation -->
+<nav class="hidden md:flex items-center gap-6 lg:gap-9">
+<a class="text-white/80 hover:text-primary text-sm font-medium leading-normal transition-colors" href="{% url 'index' %}">Home</a>
+<a class="text-white/80 hover:text-primary text-sm font-medium transition-colors" href="{% url 'celebrity_list' %}">Browse</a>
+<a class="text-white/80 hover:text-primary text-sm font-medium transition-colors" href="{% url 'aboutus' %}">About Us</a>
+<a class="text-white/80 hover:text-primary text-sm font-medium transition-colors" href="{% url 'info' %}">How It Works</a>
+<a class="text-primary text-sm font-medium underline underline-offset-4 pe-5" href="{% url 'contactus' %}">Contact Us</a>
+</nav>
+
+<!-- Mobile Menu Button -->
+<button id="mobileMenuBtn" class="md:hidden text-white focus:outline-none" aria-label="Toggle menu">
+<span class="material-symbols-outlined text-3xl" id="menuIcon">menu</span>
+</button>
+</div>
+
+<!-- Mobile Dropdown Menu -->
+<div id="mobileMenu" class="md:hidden absolute left-0 right-0 top-full mt-3 px-4 sm:px-6 md:px-8 lg:px-10 transition-all duration-300 ease-in-out opacity-0 invisible -translate-y-2 mobile-menu">
+<div class="glass-panel bg-background-dark border border-border-gold rounded-lg overflow-hidden shadow-2xl">
+<div class="flex flex-col space-y-1 p-4">
+<a class="text-white/80 hover:text-primary text-sm font-medium transition-colors py-3 px-2 hover:bg-white/5 rounded" href="{% url 'index' %}">Home</a>
+<a class="text-white/80 hover:text-primary text-sm font-medium transition-colors py-3 px-2 hover:bg-white/5 rounded" href="{% url 'celebrity_list' %}">Browse</a>
+<a class="text-white/80 hover:text-primary text-sm font-medium transition-colors py-3 px-2 hover:bg-white/5 rounded" href="{% url 'aboutus' %}">About Us</a>
+<a class="text-white/80 hover:text-primary text-sm font-medium transition-colors py-3 px-2 hover:bg-white/5 rounded" href="{% url 'info' %}">How It Works</a>
+<a class="text-primary text-sm font-medium underline underline-offset-4 py-3 px-2 hover:bg-white/5 rounded" href="{% url 'contactus' %}">Contact Us</a>
+</div>
+</div>
+</div>
+</div>
+</header>
+
+<script>
+// Mobile menu toggle with smooth animation
+document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuIcon = document.getElementById('menuIcon');
+
+    if (mobileMenuBtn && mobileMenu && menuIcon) {
+        mobileMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = mobileMenu.classList.contains('opacity-100');
+            
+            if (!isOpen) {
+                // Open menu
+                mobileMenu.classList.remove('opacity-0', 'invisible', '-translate-y-2');
+                mobileMenu.classList.add('opacity-100', 'visible', 'translate-y-0');
+                menuIcon.textContent = 'close';
+            } else {
+                // Close menu
+                mobileMenu.classList.remove('opacity-100', 'visible', 'translate-y-0');
+                mobileMenu.classList.add('opacity-0', 'invisible', '-translate-y-2');
+                menuIcon.textContent = 'menu';
+            }
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!mobileMenuBtn.contains(event.target) && !mobileMenu.contains(event.target)) {
+                if (mobileMenu.classList.contains('opacity-100')) {
+                    mobileMenu.classList.remove('opacity-100', 'visible', 'translate-y-0');
+                    mobileMenu.classList.add('opacity-0', 'invisible', '-translate-y-2');
+                    menuIcon.textContent = 'menu';
+                }
+            }
+        });
+
+        // Close menu on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileMenu.classList.contains('opacity-100')) {
+                mobileMenu.classList.remove('opacity-100', 'visible', 'translate-y-0');
+                mobileMenu.classList.add('opacity-0', 'invisible', '-translate-y-2');
+                menuIcon.textContent = 'menu';
+            }
+        });
+    }
+});
+</script>
+
+<main class="w-full">
+<section class="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 pt-12 sm:pt-16 md:pt-20 lg:pt-24 pb-12 sm:pb-16 md:pb-20 text-center">
+<h1 class="font-serif text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-6 md:mb-8 leading-tight">
+                Concierge <span class="gold-gradient-text italic">Support &amp; Inquiries</span>
+</h1>
+<p class="text-[#cbc190] text-sm sm:text-base md:text-lg lg:text-xl max-w-xs sm:max-w-sm md:max-w-lg lg:max-w-xl xl:max-w-2xl mx-auto font-light leading-relaxed">
+                Our elite concierge team is standing by to provide personalized assistance for your luxury talent procurement needs.
+            </p>
+</section>
+<section class="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 mb-16 sm:mb-20 md:mb-24 lg:mb-32">
+<div class="grid grid-cols-1 lg:grid-cols-5 gap-8 sm:gap-12 md:gap-16">
+<div class="lg:col-span-2 space-y-8 sm:space-y-10 md:space-y-12">
+<div>
+<h3 class="font-serif text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6 md:mb-8 border-b border-border-gold pb-3 sm:pb-4">Global Headquarters</h3>
+<div class="space-y-6 sm:space-y-8">
+<div class="flex items-start gap-3 sm:gap-4">
+<span class="material-symbols-outlined text-primary mt-1 text-lg sm:text-xl">call</span>
+<div>
+<p class="text-xs sm:text-sm uppercase tracking-widest text-primary font-bold mb-1">Urgent Inquiries</p>
+<p class="text-base sm:text-lg md:text-xl text-white">+1 (800) STAR-BKG</p>
+<p class="text-[#cbc190] text-xs sm:text-sm">+44 (20) 7946 0123 (UK)</p>
+</div>
+</div>
+<div class="flex items-start gap-3 sm:gap-4">
+<span class="material-symbols-outlined text-primary mt-1 text-lg sm:text-xl">mail</span>
+<div>
+<p class="text-xs sm:text-sm uppercase tracking-widest text-primary font-bold mb-1">Dedicated Concierge</p>
+<p class="text-base sm:text-lg md:text-xl text-white">concierge@starbooking.luxury</p>
+</div>
+</div>
+<div class="flex items-start gap-3 sm:gap-4">
+<span class="material-symbols-outlined text-primary mt-1 text-lg sm:text-xl">location_on</span>
+<div>
+<p class="text-xs sm:text-sm uppercase tracking-widest text-primary font-bold mb-1">Office Address</p>
+<p class="text-white text-sm sm:text-base">Mayfair, London<br/>W1K 7AH, United Kingdom</p>
+</div>
+</div>
+</div>
+</div>
+<div>
+<h4 class="text-white text-base sm:text-lg font-bold mb-4 sm:mb-6">Connect With Us</h4>
+<div class="flex gap-3 sm:gap-4">
+<a class="size-10 sm:size-12 rounded-full border border-border-gold flex items-center justify-center text-primary hover:bg-primary hover:text-background-dark transition-all" href="#">
+<span class="material-symbols-outlined text-lg sm:text-xl">public</span>
+</a>
+<a class="size-10 sm:size-12 rounded-full border border-border-gold flex items-center justify-center text-primary hover:bg-primary hover:text-background-dark transition-all" href="#">
+<span class="material-symbols-outlined text-lg sm:text-xl">share</span>
+</a>
+<a class="size-10 sm:size-12 rounded-full border border-border-gold flex items-center justify-center text-primary hover:bg-primary hover:text-background-dark transition-all" href="#">
+<span class="material-symbols-outlined text-lg sm:text-xl">chat</span>
+</a>
+</div>
+</div>
+</div>
+<div class="lg:col-span-3">
+<div class="glass-panel p-4 sm:p-6 md:p-8 lg:p-10 rounded-lg sm:rounded-xl md:rounded-2xl">
+<form class="space-y-4 sm:space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+<div class="space-y-2">
+<label class="text-xs uppercase tracking-widest text-[#cbc190] font-bold">Full Name</label>
+<input class="w-full h-10 sm:h-12 px-3 sm:px-4 rounded-lg bg-background-dark border-border-gold text-white focus:border-primary transition-colors text-sm sm:text-base" placeholder="Johnathan Sterling" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="text-xs uppercase tracking-widest text-[#cbc190] font-bold">Email Address</label>
+<input class="w-full h-10 sm:h-12 px-3 sm:px-4 rounded-lg bg-background-dark border-border-gold text-white focus:border-primary transition-colors text-sm sm:text-base" placeholder="j.sterling@executive.com" type="email"/>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+<div class="space-y-2">
+<label class="text-xs uppercase tracking-widest text-[#cbc190] font-bold">Company (Optional)</label>
+<input class="w-full h-10 sm:h-12 px-3 sm:px-4 rounded-lg bg-background-dark border-border-gold text-white focus:border-primary transition-colors text-sm sm:text-base" placeholder="Global Enterprises" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="text-xs uppercase tracking-widest text-[#cbc190] font-bold">Inquiry Type</label>
+<select class="w-full h-10 sm:h-12 px-3 sm:px-4 rounded-lg bg-background-dark border-border-gold text-white focus:border-primary transition-colors text-sm sm:text-base">
+<option>General Inquiry</option>
+<option>Urgent Booking Request</option>
+<option>Partnership Proposal</option>
+<option>Press &amp; Media</option>
+</select>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-xs uppercase tracking-widest text-[#cbc190] font-bold">Message</label>
+<textarea class="w-full p-3 sm:p-4 rounded-lg bg-background-dark border-border-gold text-white focus:border-primary transition-colors resize-none text-sm sm:text-base" placeholder="Please describe your requirements in detail..." rows="4 sm:rows-5 md:rows-6"></textarea>
+</div>
+<button class="w-full h-12 sm:h-14 bg-primary text-background-dark font-bold sm:font-black text-sm sm:text-base md:text-lg uppercase tracking-widest rounded-lg hover:brightness-110 transition-all shadow-lg sm:shadow-xl shadow-primary/5">
+                                Send Secure Message
+                            </button>
+</form>
+</div>
+</div>
+</div>
+</section>
+<section class="bg-[#161616] py-12 sm:py-16 md:py-20 lg:py-24 border-t border-border-gold">
+<div class="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10">
+<h3 class="font-serif text-xl sm:text-2xl md:text-3xl font-bold mb-8 sm:mb-12 md:mb-16 text-center">Global Presence</h3>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 md:gap-12 text-center">
+<div class="space-y-2 sm:space-y-3">
+<h4 class="text-primary text-xs sm:text-sm uppercase tracking-[0.2em] font-bold">London</h4>
+<p class="text-white font-light text-base sm:text-lg">Mayfair, W1K</p>
+<p class="text-[#cbc190] text-xs">United Kingdom</p>
+</div>
+<div class="space-y-2 sm:space-y-3">
+<h4 class="text-primary text-xs sm:text-sm uppercase tracking-[0.2em] font-bold">New York</h4>
+<p class="text-white font-light text-base sm:text-lg">Fifth Avenue, NY 10022</p>
+<p class="text-[#cbc190] text-xs">United States</p>
+</div>
+<div class="space-y-2 sm:space-y-3">
+<h4 class="text-primary text-xs sm:text-sm uppercase tracking-[0.2em] font-bold">Dubai</h4>
+<p class="text-white font-light text-base sm:text-lg">Business Bay, Downtown</p>
+<p class="text-[#cbc190] text-xs">United Arab Emirates</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="border-t border-border-gold py-8 sm:py-10 md:py-12 lg:py-16 px-4 sm:px-6 md:px-8 lg:px-10">
+<div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
+<div class="space-y-6">
+<div class="flex items-center gap-3">
+<div class="size-6 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-lg font-black tracking-tighter uppercase italic">StarBooking</h2>
+</div>
+<p class="text-slate-400 text-sm font-light leading-relaxed">
+                    The world's leading premium platform for celebrity talent procurement. Connecting extraordinary talent with extraordinary events.
+                </p>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6 italic">LINKS</h4>
+<ul class="space-y-4 text-sm text-slate-400 font-light">
+<li><a class="hover:text-primary transition-colors" href="{% url 'index' %}">Home</a></li>
+<li><a class="hover:text-primary transition-colors" href="{% url 'celebrity_list' %}">Browse</a></li>
+<li><a class="hover:text-primary transition-colors" href="{% url 'aboutus' %}">About Us</a></li>
+<li><a class="hover:text-primary transition-colors" href="{% url 'info' %}">How It Works</a></li>
+<li><a class="hover:text-primary transition-colors" href="{% url 'contactus' %}">Contact Us</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6 italic">Support</h4>
+<ul class="space-y-4 text-sm text-slate-400 font-light">
+<li><a class="hover:text-primary transition-colors" href="{% url 'privacypolicy' %}">Privacy Policy</a></li>
+<li><a class="hover:text-primary transition-colors" href="{% url 'termsandconditions' %}">Terms of Service</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6 italic">Stay Updated</h4>
+<div class="flex">
+<input class="bg-white/5 border border-white/10 rounded-l-lg px-4 py-2 text-sm w-full focus:ring-primary focus:border-primary" placeholder="Email address" type="email"/>
+<button class="bg-primary text-background-dark px-4 py-2 rounded-r-lg font-bold">
+<span class="material-symbols-outlined text-sm">send</span>
+</button>
+</div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto px-6 mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500 text-xs uppercase tracking-widest">
+<p>© 2024 StarBooking International. All rights reserved.</p>
+<div class="flex gap-8">
+<a class="hover:text-white transition-colors" href="#">Instagram</a>
+<a class="hover:text-white transition-colors" href="#">LinkedIn</a>
+<a class="hover:text-white transition-colors" href="#">Twitter (X)</a>
+</div>
+</div>
+</footer>
+</div>
+
+</body>
+</html>

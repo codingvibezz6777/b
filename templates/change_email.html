@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Change Username - StarBooking Admin</title>
+<link rel="icon" type="image/x-icon" href="{% static 'images/icoweb.png' %}">
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+            extend: {
+                colors: {
+                    "primary": "#f2cc0d",
+                    "background-light": "#f8f8f5",
+                    "background-dark": "rgba(26, 26, 26, 0.6)",
+                    "card-dark": "#1a1a1a",
+                },
+                fontFamily: {
+                    "display": ["Plus Jakarta Sans", "sans-serif"]
+                },
+                borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "2xl": "1.5rem", "full": "9999px"},
+            },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-[#0a0a0a] font-display min-h-screen flex flex-col antialiased">
+<header class="h-20 bg-background-dark text-white dark:bg-surface-dark border-b border-slate-200 dark:border-white/5 sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-8 h-full flex items-center justify-between">
+<div class="flex items-center gap-3 text-background-dark dark:text-white cursor-pointer hover:opacity-80 transition-opacity">
+<div class="size-6 text-primary">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z"></path>
+</svg>
+</div>
+<h2 class="text-xl font-bold leading-tight tracking-[-0.015em]">StarBooking</h2>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="nav-link-active text-sm font-bold transition-colors" href="{% url 'dashboard' %}">Dashboard</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm font-semibold transition-colors" href="{% url 'celeb_all' %}">Celebrities</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm font-semibold transition-colors" href="{% url 'bookings' %}">Bookings</a>
+</nav>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-3 pr-4 border-r border-slate-200 dark:border-white/10">
+<a href="{% url 'user_profile' %}"><div class="text-right hidden sm:block">
+<p class="text-xs font-bold dark:text-white leading-none">Admin User</p>
+<p class="text-[10px] text-slate-500 mt-1">Super Admin</p>
+</div></a>
+<div class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center overflow-hidden">
+<img alt="Admin Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcT307JC4VzWBaHYUCcEP7OSz7jQx56Fz3kWUMo_IXqUH3lY6Gv6klHiJSbBXCPWGOsLGhDhbi0384S0K6ILkQpWaLnI3FUddmKqNzLydCcrI--QvBTQTcVGn_Sv1nTCf6PRff8SUMfWQRt2A0s1ta7D6h7tO3z2mZTgRKTJOzBqjzVpCSXlIaNG9B8BGM53llPy9McOnmrRBuzeHkx8ya2B--dIh4VEXIParFaYhkkz8bCmQspdny2XrgXwMHannBh0YVNmwBG9A"/>
+</div>
+</div>
+<form method="POST" action="{% url 'admin_logout' %}">
+    {% csrf_token %}
+<button type="submit" class="flex items-center justify-center w-10 h-10 rounded-xl hover:bg-red-500/10 text-slate-400 hover:text-red-500 transition-colors" title="Logout">
+<span class="material-symbols-outlined">logout</span>
+</button>
+</form>
+</div>
+</div>
+</header>
+<main class="flex-1 flex items-center justify-center p-6 w-full relative overflow-hidden">
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-primary/5 rounded-full blur-[120px] pointer-events-none"></div>
+<div class="w-full max-w-[600px] bg-[#1a1a1a] dark:bg-[#1a1a1a] rounded-2xl shadow-2xl border border-[#333] overflow-hidden relative z-10 flex flex-col">
+<div class="flex flex-col items-center pt-10 pb-2 px-8">
+<div class="bg-primary/10 p-4 rounded-full mb-6">
+<span class="material-symbols-outlined text-primary text-4xl">badge</span>
+</div>
+
+<h1 class="text-white text-2xl font-bold tracking-tight text-center">Change Email</h1>
+<p class="text-[#a3a3a3] text-sm mt-3 text-center max-w-sm">
+                    Enter a new email for your administrator account. This will be your unique identifier within the StarBooking system.
+                </p>
+</div>
+<div class="p-8 pb-10 w-full">
+<form method="post" class="space-y-8">
+     {% csrf_token %}
+<div class="space-y-2">
+<label class="text-[#a3a3a3] text-xs uppercase tracking-wider font-bold ml-1" for="username">Email</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+    <span class="material-symbols-outlined text-[#555]">mail</span>
+</div>
+<input autocomplete="off" class="w-full bg-[#0a0a0a] border border-[#333] text-white text-base rounded-xl py-4 pl-12 pr-4 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-[#444] transition-all" required id="username" name="email" placeholder="@gmail.com" type="email"/>
+</div>
+<p class="text-[#555] text-xs ml-1">Must be at least 6 characters, letters and numbers only.</p>
+</div>
+<div class="flex flex-col gap-4 mt-8">
+<button class="w-full flex items-center justify-center gap-2 bg-primary hover:bg-[#d9b60b] text-[#232010] font-bold py-4 px-6 rounded-full transition-all duration-200 transform active:scale-[0.98] shadow-lg hover:shadow-primary/20 text-base" type="submit">
+<span class="material-symbols-outlined">check_circle</span>
+                            Update Email
+                        </button>
+<a class="text-[#a3a3a3] text-sm font-medium hover:text-white text-center py-2 transition-colors" href="{% url 'user_profile' %}">
+                            Cancel and return to profile
+                        </a>
+</div>
+</form>
+</div>
+</div>
+</main>
+
+</body></html>

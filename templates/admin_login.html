@@ -1,0 +1,170 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport"/>
+<title>StarBooking - Sign in</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link rel="icon" type="image/x-icon" href="{% static 'images/icoweb.png' %}">
+<link rel="manifest" href="{% static 'manifest.json' %}">
+<meta name="theme-color" content="#0f172a">
+<link rel="apple-touch-icon" href="{% static 'icons/icon-192.png' %}">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f2cc0d",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#221f10",
+                        "surface-dark": "#0a0a0a",
+                        "input-bg": "#232010",
+                        "border-gold": "#685f31",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            overflow: hidden;
+            height: 100vh;
+        }
+        /* Smooth install button */
+        #installBtn {
+            transition: all 0.2s ease;
+        }
+        #installBtn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(242,204,13,0.4);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display antialiased selection:bg-primary selection:text-black h-screen overflow-hidden flex flex-col">
+
+<!-- Abstract Background Pattern (fixed, no scroll) -->
+<div class="absolute inset-0 z-0 opacity-20 pointer-events-none">
+<div class="absolute top-[-20%] left-[-10%] h-[500px] w-[500px] rounded-full bg-primary blur-[120px] mix-blend-screen"></div>
+<div class="absolute bottom-[-20%] right-[-10%] h-[500px] w-[500px] rounded-full bg-[#494222] blur-[120px] mix-blend-screen"></div>
+</div>
+
+<!-- Main container – fills screen exactly -->
+<div class="relative z-10 flex-1 flex items-center justify-center px-4">
+    <div class="w-full max-w-[520px]">
+        <!-- Logo Header (compact) -->
+        <div class="mb-4 flex flex-col items-center gap-1">
+            <div class="flex items-center gap-2 text-white">
+                <div class="flex size-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                    <span class="material-symbols-outlined !text-[22px]">diamond</span>
+                </div>
+                <h1 class="text-2xl font-bold tracking-tight text-white">StarBooking</h1>
+            </div>
+            <p class="text-center text-[#cbc190] text-xs">Experience the world's most luxurious destinations</p>
+        </div>
+
+        <!-- Authentication Card -->
+        <div class="flex flex-col rounded-xl border border-[#494222] bg-[#1a170c]/90 backdrop-blur-sm shadow-2xl overflow-hidden relative">
+            <!-- Top Gold Accent Line -->
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50"></div>
+
+            <!-- Install Button (appears when PWA available) -->
+            <div class="absolute top-3 right-3 z-20">
+                <button id="installBtn" class="hidden bg-primary/20 hover:bg-primary/30 text-primary text-xs font-bold py-1 px-3 rounded-full border border-primary/40 backdrop-blur-sm flex items-center gap-1 transition-all">
+                    <span class="material-symbols-outlined text-sm">install_mobile</span>
+                    Install App
+                </button>
+            </div>
+
+            <div class="p-6 sm:p-8">
+                <div class="mb-5">
+                    <h2 class="text-xl font-bold text-white mb-1">Login your account</h2>
+                </div>
+                <form method="post" class="flex flex-col gap-4">
+                    {% csrf_token %}
+                    <!-- Username -->
+                    <div class="flex flex-col gap-1">
+                        <label class="text-[10px] font-bold uppercase tracking-wider text-[#cbc190]" for="username">Username</label>
+                        <div class="relative group">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-500 group-focus-within:text-primary transition-colors">
+                                <span class="material-symbols-outlined !text-[18px]">person</span>
+                            </div>
+                            <input name="username" class="form-input flex w-full rounded-lg border border-[#494222] bg-[#2a2614] py-3 pl-9 pr-3 text-white placeholder:text-gray-600 text-sm focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-200 outline-none" id="username" placeholder="e.g. John Doe" type="text"/>
+                        </div>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="flex flex-col gap-1">
+                        <label class="text-[10px] font-bold uppercase tracking-wider text-[#cbc190]" for="password">Password</label>
+                        <div class="relative group">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-500 group-focus-within:text-primary transition-colors">
+                                <span class="material-symbols-outlined !text-[18px]">lock</span>
+                            </div>
+                            <input name="password" class="form-input flex w-full rounded-lg border border-[#494222] bg-[#2a2614] py-3 pl-9 pr-3 text-white placeholder:text-gray-600 text-sm focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-200 outline-none" id="password" placeholder="******" type="password"/>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button class="group relative flex w-full items-center justify-center overflow-hidden rounded-lg bg-primary py-3 text-sm font-bold text-[#232010] shadow-[0_0_20px_rgba(242,204,13,0.15)] transition-all duration-300 hover:bg-[#ffe033] hover:shadow-[0_0_30px_rgba(242,204,13,0.3)] active:scale-[0.98] mt-2" type="submit">
+                        <span class="relative z-10 flex items-center gap-2">
+                            Login 
+                            <span class="material-symbols-outlined transition-transform duration-300 group-hover:translate-x-1 !text-[18px]">arrow_forward</span>
+                        </span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Card Footer -->
+            <div class="bg-[#15120a] px-6 py-3 text-center">
+                <p class="text-xs text-gray-400">
+                    Forgot password?
+                    <a class="font-semibold text-primary transition-colors hover:text-[#ffe033] hover:underline" href="{% url 'password_reset' %}">Recover Password</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- Footer Links (tiny) -->
+        <div class="mt-3 flex justify-center gap-6 text-[10px] text-[#555038]">
+            <a class="hover:text-[#cbc190] transition-colors" href="#">Privacy</a>
+            <a class="hover:text-[#cbc190] transition-colors" href="#">Terms</a>
+        </div>
+    </div>
+</div>
+
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("{% static 'sw.js' %}")
+    .then(() => console.log("Service Worker Registered"));
+}
+</script>
+
+<script>
+let deferredPrompt;
+
+window.addEventListener("beforeinstallprompt", e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  const installBtn = document.getElementById("installBtn");
+  installBtn.classList.remove("hidden");
+});
+
+document.getElementById("installBtn")?.addEventListener("click", async () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    console.log(`User response to the install prompt: ${outcome}`);
+    deferredPrompt = null;
+    document.getElementById("installBtn").classList.add("hidden");
+  }
+});
+</script>
+
+</body>
+</html>

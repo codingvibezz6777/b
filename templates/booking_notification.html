@@ -1,0 +1,11 @@
+<h2>New Booking Received!</h2>
+<p><strong>Celebrity:</strong> {{ booking.celebrity.name }}</p>
+<p><strong>Booked By:</strong> {{ booking.full_name }}</p>
+<p><strong>Email:</strong> {{ booking.email }}</p>
+<p><strong>Phone:</strong> {{ booking.phone }}</p>
+<p><strong>Event Type:</strong> {{ booking.event_type }}</p>
+<p><strong>Event Date:</strong> {{ booking.event_date }}</p>
+<p><strong>Event Location:</strong> {{ booking.event_location }}</p>
+<p><strong>Budget:</strong> {{ booking.budget }}</p>
+<p><strong>Additional Info:</strong> {{ booking.addinfo|default:"N/A" }}</p>
+<p><strong>Status:</strong> {{ booking.get_status_display }}</p>

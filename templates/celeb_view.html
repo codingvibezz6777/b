@@ -1,0 +1,205 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Admin Celebrity Detail - StarBooking</title>
+<link rel="icon" type="image/x-icon" href="{% static 'images/icoweb.png' %}">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f2cc0d",
+                        "primary-hover": "#e6c200",
+                        "background-dark": "#0a0a0a",
+                        "card-dark": "#141414",
+                        "surface": "#1f1f1f",
+                        "border-color": "#2a2a2a"
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "2xl": "2rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        .glass-panel {
+            background: rgba(20, 20, 20, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .dashboard-card {
+            @apply bg-card-dark border border-white/5 rounded-xl p-8 hover:border-primary/30 transition-colors duration-300;
+        }
+        .table-row-hover:hover {
+            background-color: rgba(242, 204, 13, 0.05);
+        }::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #121212; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #444; 
+        }
+    </style>
+</head>
+<body class="bg-background-dark font-display text-white antialiased">
+<div class="relative flex min-h-screen w-full flex-col">
+<header class="sticky top-0 w-full z-50 bg-background-dark/95 backdrop-blur-sm border-b border-white/5">
+<div class="w-full px-6 md:px-10 h-20 flex items-center justify-between max-w-[1800px] mx-auto">
+<div class="flex items-center gap-3 text-primary">
+<div class="size-8">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path>
+</svg>
+</div>
+<span class="text-white text-xl font-bold tracking-tight">StarBooking <span class="text-white/30 font-normal text-sm ml-3 border-l border-white/10 pl-3">Admin Dashboard</span></span>
+</div>
+<div class="flex items-center gap-6">
+<button class="relative p-2 text-white/60 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 size-2 bg-primary rounded-full"></span>
+</button>
+<div class="flex items-center gap-3 pl-6 border-l border-white/5">
+<div class="text-right hidden md:block">
+<p class="text-sm font-bold text-white">John Doe</p>
+<p class="text-xs text-white/40">Super Admin</p>
+</div>
+<div class="size-10 rounded-full bg-primary/20 flex items-center justify-center text-primary text-sm font-bold border border-primary/20">JD</div>
+</div>
+</div>
+</div>
+</header>
+<main class="w-full flex-grow p-6 md:p-10 max-w-[1800px] mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+<nav class="flex items-center text-sm text-white/40 font-medium">
+<a class="hover:text-primary transition-colors" href="{% url 'dashboard' %}">Dashboard</a>
+<span class="material-symbols-outlined text-[16px] mx-2">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="{% url 'celeb_all' %}">Celebrities</a>
+<span class="material-symbols-outlined text-[16px] mx-2">chevron_right</span>
+<span class="text-white">{{ seedetceleb.name }}</span>
+</nav>
+<div class="flex gap-4">
+<a href="{% url 'celeb_all' %}"><button class="px-5 py-2.5 bg-surface hover:bg-white/10 border border-white/10 text-white rounded-lg text-sm font-semibold transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+                    Back to List
+                </button>
+<a href="{% url 'edit_celebrity' seedetceleb.id %}"><button class="px-5 py-2.5 bg-primary text-background-dark hover:bg-primary-hover border border-primary hover:border-primary-hover rounded-lg text-sm font-bold transition-all flex items-center gap-2 shadow-[0_0_15px_rgba(242,204,13,0.15)]">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+                    Edit Profile
+                </button></a>
+</div>
+</div>
+<div class="relative w-full h-[400px] rounded-3xl overflow-hidden mb-10 border border-white/5 group shadow-2xl">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style='background-image: url("{{ seedetceleb.image.url }}");'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/40 to-transparent"></div>
+<div class="absolute bottom-0 left-0 w-full p-8 md:p-10 flex items-end gap-8">
+<div class="relative z-10 size-40 rounded-2xl border-[3px] border-card-dark bg-surface overflow-hidden shadow-2xl shrink-0">
+<div class="w-full h-full bg-cover bg-center" style='background-image: url("{{ seedetceleb.image.url }}");'></div>
+</div>
+<div class="glass-panel px-8 py-6 rounded-2xl mb-2 flex-grow max-w-2xl flex flex-col justify-center">
+<div class="flex items-center gap-3 mb-2">
+<span class="px-3 py-1 rounded-full bg-primary text-background-dark text-xs font-bold uppercase tracking-wider">Top Tier</span>
+<div class="flex items-center gap-1 text-green-400 text-xs font-bold uppercase tracking-wider">
+<span class="relative flex h-2 w-2 mr-1">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+</span>
+                            Available
+                        </div>
+</div>
+<h1 class="text-4xl md:text-5xl font-extrabold text-white mb-1 tracking-tight"> {{ seedetceleb.name }}</h1>
+<p class="text-white/70 font-medium text-lg flex items-center gap-2">
+                        Global Pop Sensation
+                        <span class="size-1 bg-white/30 rounded-full mx-1"></span>
+                        Los Angeles, CA
+                    </p>
+</div>
+</div>
+
+</div>
+
+<div class="dashboard-card border-l-4 border-l-primary/50">
+<div class="flex justify-between items-center mb-8">
+<h3 class="text-xl font-bold text-white flex items-center gap-3">
+<div class="p-2 rounded bg-surface border border-white/5">
+<span class="material-symbols-outlined text-primary">settings_suggest</span>
+</div>
+                            Management Overview
+                        </h3>
+<a href="{% url 'celebrity_detail' seedetceleb.slug %}"><button class="text-sm text-primary hover:text-primary-hover font-semibold">View Public Page</button></a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-y-8 gap-x-12 mb-8">
+<div>
+<label class="text-xs font-bold text-white/30 uppercase tracking-widest block mb-2">Legal Name</label>
+<p class="text-white text-xl font-semibold tracking-tight"> {{ seedetceleb.name }}</p>
+</div>
+<div>
+<label class="text-xs font-bold text-white/30 uppercase tracking-widest block mb-2">Stage Name</label>
+<p class="text-white text-xl font-semibold tracking-tight"> {{ seedetceleb.stagename }}</p>
+</div>
+<div>
+<label class="text-xs font-bold text-white/30 uppercase tracking-widest block mb-2">Primary Category</label>
+<span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white text-sm font-medium">
+<span class="material-symbols-outlined text-base text-primary">music_note</span>
+                                    {{ seedetceleb.category }}
+                                </span>
+</div>
+<div>
+<label class="text-xs font-bold text-white/30 uppercase tracking-widest block mb-2">Ratings</label>
+<p>5.0</p>
+</div>
+</div>
+<div class="border-t border-white/5 pt-8">
+<label class="text-xs font-bold text-white/30 uppercase tracking-widest block mb-3">Biography</label>
+<div class="bg-surface/30 rounded-xl p-6 border border-white/5">
+<p class="text-white/80 text-base leading-relaxed">
+                                {{ seedetceleb.bio }}
+                            </p>
+
+</div>
+</div>
+
+<div class="border-none border-white/5 pt-8 mt-5">
+<label class="text-xs font-bold text-white/30 uppercase tracking-widest block mb-3">Biography</label>
+<div class="bg-surface/30 rounded-xl p-6 border border-white/5">
+<p class="text-white/80 text-base leading-relaxed">
+                                {{ seedetceleb.extra }}
+                            </p>
+
+</div>
+</div>
+
+<div class="bg-card-dark/80 backdrop-blur mt-5 border border-white/5 p-3 rounded-xl flex flex-col justify-center relative overflow-hidden group col-span-1 lg:col-span-2">
+<label class="text-[10px] font-bold text-white/40 uppercase tracking-widest block mb-2">Base Pricing</label>
+<div class="flex items-baseline gap-1 mb-2">
+<span class="text-3xl font-black text-primary drop-shadow-sm">$75,000</span>
+<span class="text-xs text-white/50 font-semibold">USD / Event</span>
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+</main>
+</div>
+
+</body></html>

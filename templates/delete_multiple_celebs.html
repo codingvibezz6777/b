@@ -1,0 +1,230 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Talent Roster Management - Admin | StarBooking</title>
+<link rel="icon" type="image/x-icon" href="{% static 'images/icoweb.png' %}">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Noto+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f2cc0d",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#121212",
+                        "card-dark": "#1e1e1e",
+                        "border-dark": "#333333",
+                        "input-dark": "#262626",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Serif", "serif"],
+                        "sans": ["Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        body {
+            font-family: 'Noto Sans', sans-serif;
+        }
+        h1, h2, h3, .font-display {
+            font-family: 'Noto Serif', serif;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #121212;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #333333;
+            border-radius: 10px;
+        }.toggle-checkbox:checked {
+            right: 0;
+            border-color: #f2cc0d;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #f2cc0d;
+        }
+        
+
+        .noti{
+            width:200px;
+            height:50px;
+            margin:0 auto;
+            margin-top:10px;
+            font-size:14px;
+            text-align: center;
+            padding:5px;
+            
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+
+<header class="h-20 bg-background-dark dark:bg-surface-dark border-b border-slate-200 dark:border-white/5 sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-8 h-full flex items-center justify-between">
+<div class="flex items-center gap-3 text-background-dark dark:text-white cursor-pointer hover:opacity-80 transition-opacity">
+<div class="size-6 text-primary">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z"></path>
+</svg>
+</div>
+<h2 class="text-xl font-bold leading-tight tracking-[-0.015em]">StarBooking</h2>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm font-semibold transition-colors" href="{% url 'dashboard' %}">Dashboard</a>
+<a class="nav-link-active text-sm font-bold transition-colors" href="{% url 'celeb_all' %}">Celebrities</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm font-semibold transition-colors" href="{% url 'bookings' %}">Bookings</a>
+</nav>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-3 pr-4 border-r border-slate-200 dark:border-white/10">
+<a href="{% url 'user_profile' %}"><div class="text-right hidden sm:block">
+<p class="text-xs font-bold dark:text-white leading-none">Admin User</p>
+<p class="text-[10px] text-slate-500 mt-1">Super Admin</p>
+</div></a>
+<div class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center overflow-hidden">
+<img alt="Admin Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcT307JC4VzWBaHYUCcEP7OSz7jQx56Fz3kWUMo_IXqUH3lY6Gv6klHiJSbBXCPWGOsLGhDhbi0384S0K6ILkQpWaLnI3FUddmKqNzLydCcrI--QvBTQTcVGn_Sv1nTCf6PRff8SUMfWQRt2A0s1ta7D6h7tO3z2mZTgRKTJOzBqjzVpCSXlIaNG9B8BGM53llPy9McOnmrRBuzeHkx8ya2B--dIh4VEXIParFaYhkkz8bCmQspdny2XrgXwMHannBh0YVNmwBG9A"/>
+</div>
+</div>
+
+<form method="POST" action="{% url 'admin_logout' %}">
+    {% csrf_token %}
+<button type="submit" class="flex items-center justify-center w-10 h-10 rounded-xl hover:bg-red-500/10 text-slate-400 hover:text-red-500 transition-colors" title="Logout">
+<span class="material-symbols-outlined">logout</span>
+</button>
+</form>
+</div>
+</div>
+</header>
+<main class="flex-1 py-8 px-4 lg:px-20">
+<div class="max-w-7xl mx-auto">
+<div class="flex flex-wrap items-center gap-2 mb-6">
+<a class="text-slate-500 hover:text-primary text-sm font-medium" href="{% url 'celeb_all' %}">Celebrity List</a>
+<span class="material-symbols-outlined text-slate-600 text-xs">chevron_right</span>
+<span class="text-primary text-sm font-medium">Bulk Delete</span>
+</div>
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+<div>
+<h1 class="text-white text-4xl font-black leading-tight tracking-tight mb-2">Bulk Delete</h1>
+<p class="text-slate-400 text-lg font-normal max-w-2xl">Delete Multiple Celebrities</p>
+</div>
+
+</div>
+<div class="bg-card-dark rounded-xl border border-border-dark shadow-2xl overflow-hidden">
+<div class="overflow-x-auto custom-scrollbar">
+<form method="POST" action="{% url 'delete_multiple_celebs_action' %}">
+    {% csrf_token %}
+
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-border-dark bg-black/20">
+<th class="px-6 py-5 text-slate-400 text-xs font-bold uppercase tracking-widest"><input type="checkbox" id="select-all">
+</th>
+<th class="px-6 py-5 text-slate-400 text-xs font-bold uppercase tracking-widest">Celebrity</th>
+<th class="px-6 py-5 text-slate-400 text-xs font-bold uppercase tracking-widest">Category</th>
+<th class="px-6 py-5 text-slate-400 text-xs font-bold uppercase tracking-widest text-center">Stage name</th>
+
+</tr>
+</thead>
+<tbody class="divide-y divide-border-dark">
+    {% for celeb in celebrities %}
+<tr class="hover:bg-white/[0.02] transition-colors">
+<td class="px-6 py-4">
+<input type="checkbox" name="celebrities" value="{{ celeb.id }}">
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-4">
+<div>
+<div class="text-white font-display font-bold text-base leading-tight">{{ celeb.name }}</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full border border-primary/30 bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider">{{ celeb.category }}</span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="text-white font-bold font-sans text-center ">{{ celeb.stagename }}</span></div>
+</td>
+</tr>
+{% empty %}
+<tr class="hover:bg-white/[0.02] w-full transition-colors">
+    <td class="px-6 py-4 text-center" colspan="5">
+        No bookings yet
+    </td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+    <div class="mt-4 flex gap-2">
+        <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-500 transition">
+            Delete Selected
+        </button>
+        <a href="{% url 'celeb_all' %}" class="bg-gray-300 text-black px-4 py-2 rounded hover:bg-gray-400 transition">
+            Cancel
+        </a>
+    </div>
+</form>
+</div>
+</main>
+<footer class="bg-background-dark py-10 px-4 border-t border-border-dark mt-auto">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-2 text-slate-500">
+<span class="material-symbols-outlined text-sm">verified_user</span>
+<span class="text-xs uppercase font-bold tracking-tighter">Secure Talent Portal v2.4</span>
+</div>
+<div class="flex gap-8 text-xs text-slate-600 uppercase font-bold tracking-widest">
+<a class="hover:text-primary transition-colors" href="#">Internal Privacy</a>
+<a class="hover:text-primary transition-colors" href="#">Admin Log</a>
+<a class="hover:text-primary transition-colors" href="#">System Status</a>
+</div>
+<p class="text-slate-600 text-xs">© 2024 StarBooking Management Group. All rights reserved.</p>
+</div>
+</footer>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const notifications = document.querySelectorAll(".noti");
+
+    notifications.forEach((noti) => {
+        // Slide down
+        setTimeout(() => {
+            noti.classList.remove("opacity-0", "-translate-y-6");
+            noti.classList.add("opacity-100", "translate-y-0");
+        }, 100);
+
+        // Stay 5 seconds, then slide up
+        setTimeout(() => {
+            noti.classList.remove("opacity-100", "translate-y-0");
+            noti.classList.add("opacity-0", "-translate-y-6");
+        }, 3000);
+
+        // Remove from DOM after animation
+        setTimeout(() => {
+            noti.remove();
+        }, 5600);
+    });
+});
+</script>
+<script>
+    // Select All functionality
+    document.getElementById('select-all').addEventListener('change', function() {
+        const checkboxes = document.querySelectorAll('input[name="celebrities"]');
+        checkboxes.forEach(cb => cb.checked = this.checked);
+    });
+</script>
+
+</body></html>

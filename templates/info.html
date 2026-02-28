@@ -1,0 +1,399 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport"/>
+    <title>StarBooking - How It Works</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'images/icoweb.png' %}">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f2cc0d",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#121212",
+                        "card-dark": "#1e1e1e",
+                        "border-gold": "#494222",
+                    },
+                    fontFamily: {
+                        "display": ["Be Vietnam Pro", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(242, 204, 13, 0.1);
+        }
+        .gold-gradient-text {
+            background: linear-gradient(to right, #f2cc0d, #bda10a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        /* Smooth mobile menu transitions */
+        .mobile-menu {
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+        }
+        body {
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white transition-colors duration-300 overflow-x-hidden">
+    <div class="layout-container flex h-full grow flex-col">
+        <!-- Header with mobile menu -->
+        <header class="sticky top-0 z-50 w-full border-b border-border-gold bg-background-dark/80 backdrop-blur-md px-4 sm:px-6 md:px-8 lg:px-10 py-3 sm:py-4">
+            <div class="max-w-[1440px] mx-auto">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2 sm:gap-3 md:gap-4 text-white">
+                        <div class="size-5 sm:size-6 text-primary">
+                            <svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path>
+                            </svg>
+                        </div>
+                        <h2 class="text-white text-lg sm:text-xl font-bold leading-tight tracking-[-0.015em]">StarBooking</h2>
+                    </div>
+
+                    <!-- Desktop Navigation -->
+                    <nav class="hidden md:flex items-center gap-6 lg:gap-9">
+                        <a class="text-white/80 hover:text-primary text-sm font-medium leading-normal transition-colors" href="{% url 'index' %}">Home</a>
+                        <a class="text-white/80 hover:text-primary text-sm font-medium leading-normal transition-colors" href="{% url 'celebrity_list' %}">Browse</a>
+                        <a class="text-white/80 hover:text-primary text-sm font-medium leading-normal transition-colors" href="{% url 'aboutus' %}">About Us</a>
+                        <a class="text-primary text-sm font-medium leading-normal underline underline-offset-4" href="{% url 'info' %}">How It Works</a>
+                        <a class="text-white/80 hover:text-primary text-sm font-medium leading-normal transition-colors" href="{% url 'contactus' %}">Contact Us</a>
+                    </nav>
+
+                    <!-- Mobile Menu Button -->
+                    <button id="mobileMenuBtn" class="md:hidden text-white focus:outline-none" aria-label="Toggle menu">
+                        <span class="material-symbols-outlined text-3xl" id="menuIcon">menu</span>
+                    </button>
+                </div>
+
+                <!-- Mobile Dropdown Menu -->
+                <div id="mobileMenu" class="md:hidden absolute left-0 right-0 top-full mt-3 px-4 sm:px-6 md:px-8 lg:px-10 transition-all duration-300 ease-in-out opacity-0 invisible -translate-y-2 mobile-menu">
+                    <div class="glass-panel bg-background-dark border border-border-gold rounded-lg overflow-hidden shadow-2xl">
+                        <div class="flex flex-col space-y-1 p-4">
+                            <a class="text-white/80 hover:text-primary text-sm font-medium transition-colors py-3 px-2 hover:bg-white/5 rounded" href="{% url 'index' %}">Home</a>
+                            <a class="text-white/80 hover:text-primary text-sm font-medium transition-colors py-3 px-2 hover:bg-white/5 rounded" href="{% url 'celebrity_list' %}">Browse</a>
+                            <a class="text-white/80 hover:text-primary text-sm font-medium transition-colors py-3 px-2 hover:bg-white/5 rounded" href="{% url 'aboutus' %}">About Us</a>
+                            <a class="text-primary text-sm font-medium underline underline-offset-4 py-3 px-2 hover:bg-white/5 rounded" href="{% url 'info' %}">How It Works</a>
+                            <a class="text-white/80 hover:text-primary text-sm font-medium transition-colors py-3 px-2 hover:bg-white/5 rounded" href="{% url 'contactus' %}">Contact Us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <script>
+        // Mobile menu toggle with smooth animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuIcon = document.getElementById('menuIcon');
+
+            if (mobileMenuBtn && mobileMenu && menuIcon) {
+                mobileMenuBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isOpen = mobileMenu.classList.contains('opacity-100');
+                    
+                    if (!isOpen) {
+                        // Open menu
+                        mobileMenu.classList.remove('opacity-0', 'invisible', '-translate-y-2');
+                        mobileMenu.classList.add('opacity-100', 'visible', 'translate-y-0');
+                        menuIcon.textContent = 'close';
+                    } else {
+                        // Close menu
+                        mobileMenu.classList.remove('opacity-100', 'visible', 'translate-y-0');
+                        mobileMenu.classList.add('opacity-0', 'invisible', '-translate-y-2');
+                        menuIcon.textContent = 'menu';
+                    }
+                });
+
+                // Close menu when clicking outside
+                document.addEventListener('click', (event) => {
+                    if (!mobileMenuBtn.contains(event.target) && !mobileMenu.contains(event.target)) {
+                        if (mobileMenu.classList.contains('opacity-100')) {
+                            mobileMenu.classList.remove('opacity-100', 'visible', 'translate-y-0');
+                            mobileMenu.classList.add('opacity-0', 'invisible', '-translate-y-2');
+                            menuIcon.textContent = 'menu';
+                        }
+                    }
+                });
+
+                // Close menu on escape key
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && mobileMenu.classList.contains('opacity-100')) {
+                        mobileMenu.classList.remove('opacity-100', 'visible', 'translate-y-0');
+                        mobileMenu.classList.add('opacity-0', 'invisible', '-translate-y-2');
+                        menuIcon.textContent = 'menu';
+                    }
+                });
+            }
+        });
+        </script>
+        
+        <main class="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 py-8 sm:py-10 md:py-12">
+            <!-- PageHeading -->
+            <div class="flex flex-col items-center text-center gap-3 sm:gap-4 mb-12 md:mb-16">
+                <h1 class="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-tight tracking-tight">
+                    Booking Greatness <span class="gold-gradient-text">Made Simple</span>
+                </h1>
+                <p class="text-[#cbc190] text-base sm:text-lg md:text-xl max-w-xs sm:max-w-md md:max-w-2xl font-light leading-relaxed">
+                    A premium experience designed to help you secure world-class talent with absolute precision and ease.
+                </p>
+            </div>
+            
+            <!-- Steps Section: The Form Process -->
+            <div class="space-y-10 sm:space-y-12 md:space-y-16">
+                <!-- Group 1: The Talent -->
+                <div>
+                    <h2 class="text-primary text-xs font-bold uppercase tracking-widest mb-4 sm:mb-6 flex items-center gap-2">
+                        <span class="w-6 sm:w-8 h-px bg-primary/30"></span> Phase 1: Talent Selection
+                    </h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                        <!-- Celebrity Name Card -->
+                        <div class="flex flex-col gap-3 sm:gap-4 rounded-xl border border-border-gold bg-card-dark p-4 sm:p-6 transition-all hover:border-primary/50 group">
+                            <span class="material-symbols-outlined text-primary text-3xl sm:text-4xl group-hover:scale-110 transition-transform">star</span>
+                            <div class="flex flex-col gap-1 sm:gap-2">
+                                <h3 class="text-white text-base sm:text-lg font-bold">Celebrity Name</h3>
+                                <p class="text-[#cbc190] text-xs sm:text-sm leading-relaxed">Choose the specific star you wish to book. Our roster includes global icons across music, film, and sports.</p>
+                            </div>
+                        </div>
+                        <!-- Event Type Card -->
+                        <div class="flex flex-col gap-3 sm:gap-4 rounded-xl border border-border-gold bg-card-dark p-4 sm:p-6 transition-all hover:border-primary/50 group">
+                            <span class="material-symbols-outlined text-primary text-3xl sm:text-4xl group-hover:scale-110 transition-transform">celebration</span>
+                            <div class="flex flex-col gap-1 sm:gap-2">
+                                <h3 class="text-white text-base sm:text-lg font-bold">Event Type</h3>
+                                <p class="text-[#cbc190] text-xs sm:text-sm leading-relaxed">Define the nature of your event: Corporate Gala, Private Concert, Keynote Speech, or Product Launch.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Group 2: Event Logistics -->
+                <div>
+                    <h2 class="text-primary text-xs font-bold uppercase tracking-widest mb-4 sm:mb-6 flex items-center gap-2">
+                        <span class="w-6 sm:w-8 h-px bg-primary/30"></span> Phase 2: Logistics &amp; Schedule
+                    </h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-4">
+                        <div class="flex flex-col gap-3 sm:gap-4 rounded-xl border border-border-gold bg-card-dark p-4 sm:p-5 transition-all hover:border-primary/50">
+                            <span class="material-symbols-outlined text-primary text-2xl sm:text-3xl">location_on</span>
+                            <h3 class="text-white text-sm sm:text-base font-bold">Event Venue</h3>
+                            <p class="text-[#cbc190] text-xs">The specific physical location or auditorium for the performance.</p>
+                        </div>
+                        <div class="flex flex-col gap-3 sm:gap-4 rounded-xl border border-border-gold bg-card-dark p-4 sm:p-5 transition-all hover:border-primary/50">
+                            <span class="material-symbols-outlined text-primary text-2xl sm:text-3xl">map</span>
+                            <h3 class="text-white text-sm sm:text-base font-bold">Event Location</h3>
+                            <p class="text-[#cbc190] text-xs">City and country details for logistics planning and travel routing.</p>
+                        </div>
+                        <div class="flex flex-col gap-3 sm:gap-4 rounded-xl border border-border-gold bg-card-dark p-4 sm:p-5 transition-all hover:border-primary/50">
+                            <span class="material-symbols-outlined text-primary text-2xl sm:text-3xl">schedule</span>
+                            <h3 class="text-white text-sm sm:text-base font-bold">Event Duration</h3>
+                            <p class="text-[#cbc190] text-xs">Precise hours needed for the engagement, including soundchecks.</p>
+                        </div>
+                        <div class="flex flex-col gap-3 sm:gap-4 rounded-xl border border-border-gold bg-card-dark p-4 sm:p-5 transition-all hover:border-primary/50">
+                            <span class="material-symbols-outlined text-primary text-2xl sm:text-3xl">flight_takeoff</span>
+                            <h3 class="text-white text-sm sm:text-base font-bold">Nearest Airport</h3>
+                            <p class="text-[#cbc190] text-xs">Assists our travel team in arranging private or commercial jet arrivals.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Group 3: Personal & Professional Details -->
+                <div>
+                    <h2 class="text-primary text-xs font-bold uppercase tracking-widest mb-4 sm:mb-6 flex items-center gap-2">
+                        <span class="w-6 sm:w-8 h-px bg-primary/30"></span> Phase 3: Client Identity
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                        <!-- Column 1 -->
+                        <div class="space-y-3 sm:space-y-4">
+                            <div class="flex items-center gap-3 sm:gap-4 rounded-xl border border-border-gold bg-card-dark p-3 sm:p-4">
+                                <span class="material-symbols-outlined text-primary text-lg sm:text-xl">person</span>
+                                <div>
+                                    <p class="text-white text-sm font-bold">Full Name</p>
+                                    <p class="text-[#cbc190] text-[11px]">Primary point of contact for legal.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 sm:gap-4 rounded-xl border border-border-gold bg-card-dark p-3 sm:p-4">
+                                <span class="material-symbols-outlined text-primary text-lg sm:text-xl">mail</span>
+                                <div>
+                                    <p class="text-white text-sm font-bold">Email Address</p>
+                                    <p class="text-[#cbc190] text-[11px]">Secure communication channel.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Column 2 -->
+                        <div class="space-y-3 sm:space-y-4">
+                            <div class="flex items-center gap-3 sm:gap-4 rounded-xl border border-border-gold bg-card-dark p-3 sm:p-4">
+                                <span class="material-symbols-outlined text-primary text-lg sm:text-xl">call</span>
+                                <div>
+                                    <p class="text-white text-sm font-bold">Phone Number</p>
+                                    <p class="text-[#cbc190] text-[11px]">Direct line for emergency logistics.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 sm:gap-4 rounded-xl border border-border-gold bg-card-dark p-3 sm:p-4">
+                                <span class="material-symbols-outlined text-primary text-lg sm:text-xl">work</span>
+                                <div>
+                                    <p class="text-white text-sm font-bold">Job Title</p>
+                                    <p class="text-[#cbc190] text-[11px]">Role within the booking organization.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Column 3 -->
+                        <div class="space-y-3 sm:space-y-4">
+                            <div class="flex items-center gap-3 sm:gap-4 rounded-xl border border-border-gold bg-card-dark p-3 sm:p-4">
+                                <span class="material-symbols-outlined text-primary text-lg sm:text-xl">home</span>
+                                <div>
+                                    <p class="text-white text-sm font-bold">Company Address</p>
+                                    <p class="text-[#cbc190] text-[11px]">Physical billing and notice address.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 sm:gap-4 rounded-xl border border-border-gold bg-card-dark p-3 sm:p-4">
+                                <span class="material-symbols-outlined text-primary text-lg sm:text-xl">wc</span>
+                                <div>
+                                    <p class="text-white text-sm font-bold">Gender Identity</p>
+                                    <p class="text-[#cbc190] text-[11px]">Required for specific cultural compliance.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Group 4: Commercials -->
+                <div class="pt-6 sm:pt-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+                        <div class="flex flex-col gap-3 sm:gap-4 rounded-xl border border-primary/40 bg-primary/5 p-6 sm:p-8 relative overflow-hidden group">
+                            <div class="absolute -right-6 sm:-right-8 -bottom-6 sm:-bottom-8 opacity-10 group-hover:scale-110 transition-transform duration-500">
+                                <span class="material-symbols-outlined text-primary text-[120px] sm:text-[160px]">payments</span>
+                            </div>
+                            <span class="material-symbols-outlined text-primary text-4xl sm:text-5xl">payments</span>
+                            <div class="relative z-10">
+                                <h3 class="text-white text-xl sm:text-2xl font-bold mb-1 sm:mb-2">Investment Budget</h3>
+                                <p class="text-[#cbc190] text-xs sm:text-sm leading-relaxed">State your available budget for the talent fee and production. Clear financial transparency speeds up the negotiation process with agents.</p>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-3 sm:gap-4 rounded-xl border border-border-gold bg-card-dark p-6 sm:p-8 relative overflow-hidden group">
+                            <div class="absolute -right-6 sm:-right-8 -bottom-6 sm:-bottom-8 opacity-10 group-hover:scale-110 transition-transform duration-500">
+                                <span class="material-symbols-outlined text-white text-[120px] sm:text-[160px]">post_add</span>
+                            </div>
+                            <span class="material-symbols-outlined text-primary text-4xl sm:text-5xl">post_add</span>
+                            <div class="relative z-10">
+                                <h3 class="text-white text-xl sm:text-2xl font-bold mb-1 sm:mb-2">Additional Info</h3>
+                                <p class="text-[#cbc190] text-xs sm:text-sm leading-relaxed">Share special requests, rider specifics, or confidentiality requirements. This is where you detail your unique vision for the event.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pro Tips Section with Glassmorphism -->
+            <div class="mt-16 sm:mt-20 md:mt-24 mb-8 sm:mb-10 md:mb-12">
+                <div class="glass-panel rounded-xl sm:rounded-2xl p-6 sm:p-8 md:p-10 lg:p-14 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 sm:p-6 md:p-8 opacity-20 hidden lg:block">
+                        <span class="material-symbols-outlined text-primary text-[120px] sm:text-[160px] md:text-[200px]">lightbulb</span>
+                    </div>
+                    <div class="relative z-10 max-w-2xl">
+                        <div class="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+                            <span class="material-symbols-outlined text-primary font-bold">verified</span>
+                            <h2 class="text-white text-xl sm:text-2xl md:text-3xl font-black tracking-tight">Pro Tips for Smooth Booking</h2>
+                        </div>
+                        <div class="grid gap-4 sm:gap-6 md:gap-8">
+                            <div class="flex gap-3 sm:gap-4">
+                                <div class="flex-none w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-xs sm:text-sm">01</div>
+                                <div>
+                                    <p class="text-white font-bold mb-1 text-sm sm:text-base">Plan Ahead</p>
+                                    <p class="text-[#cbc190] text-xs sm:text-sm leading-relaxed">Top-tier celebrities are often booked 6-12 months in advance. Early inquiries have a 40% higher success rate.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-3 sm:gap-4">
+                                <div class="flex-none w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-xs sm:text-sm">02</div>
+                                <div>
+                                    <p class="text-white font-bold mb-1 text-sm sm:text-base">Be Specific About Riders</p>
+                                    <p class="text-[#cbc190] text-xs sm:text-sm leading-relaxed">Clearly detailing technical and hospitality requirements in your initial request helps finalize contracts much faster.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-3 sm:gap-4">
+                                <div class="flex-none w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-xs sm:text-sm">03</div>
+                                <div>
+                                    <p class="text-white font-bold mb-1 text-sm sm:text-base">Flexible Dates</p>
+                                    <p class="text-[#cbc190] text-xs sm:text-sm leading-relaxed">If your event date is flexible, mention it. Mid-week bookings are often more accessible and can offer better rates.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-6 sm:mt-8 md:mt-10">
+                            <button class="bg-primary hover:brightness-110 text-background-dark font-bold sm:font-black px-6 sm:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl transition-all flex items-center gap-2 text-sm sm:text-base">
+                                Start Your Inquiry Now <span class="material-symbols-outlined">arrow_forward</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Footer -->
+        <footer class="border-t border-border-gold py-8 sm:py-10 md:py-12 px-4 sm:px-6 md:px-8 lg:px-10">
+
+<div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
+<div class="space-y-6">
+<div class="flex items-center gap-3">
+<div class="size-6 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-lg font-black tracking-tighter uppercase italic">StarBooking</h2>
+</div>
+<p class="text-slate-400 text-sm font-light leading-relaxed">
+                    The world's leading premium platform for celebrity talent procurement. Connecting extraordinary talent with extraordinary events.
+                </p>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6 italic">LINKS</h4>
+<ul class="space-y-4 text-sm text-slate-400 font-light">
+<li><a class="hover:text-primary transition-colors" href="{% url 'index' %}">Home</a></li>
+<li><a class="hover:text-primary transition-colors" href="{% url 'celebrity_list' %}">Browse</a></li>
+<li><a class="hover:text-primary transition-colors" href="{% url 'aboutus' %}">About Us</a></li>
+<li><a class="hover:text-primary transition-colors" href="{% url 'info' %}">How It Works</a></li>
+<li><a class="hover:text-primary transition-colors" href="{% url 'contactus' %}">Contact Us</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6 italic">Support</h4>
+<ul class="space-y-4 text-sm text-slate-400 font-light">
+<li><a class="hover:text-primary transition-colors" href="{% url 'privacypolicy' %}">Privacy Policy</a></li>
+<li><a class="hover:text-primary transition-colors" href="{% url 'termsandconditions' %}">Terms of Service</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6 italic">Stay Updated</h4>
+<div class="flex">
+<input class="bg-white/5 border border-white/10 rounded-l-lg px-4 py-2 text-sm w-full focus:ring-primary focus:border-primary" placeholder="Email address" type="email"/>
+<button class="bg-primary text-background-dark px-4 py-2 rounded-r-lg font-bold">
+<span class="material-symbols-outlined text-sm">send</span>
+</button>
+</div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto px-6 mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500 text-xs uppercase tracking-widest">
+<p>© 2024 StarBooking International. All rights reserved.</p>
+<div class="flex gap-8">
+<a class="hover:text-white transition-colors" href="#">Instagram</a>
+<a class="hover:text-white transition-colors" href="#">LinkedIn</a>
+<a class="hover:text-white transition-colors" href="#">Twitter (X)</a>
+</div>
+</div>
+        </footer>
+    </div>
+</body>
+</html>

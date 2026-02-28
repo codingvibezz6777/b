@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmation</title>
+</head>
+<body style="margin:0;padding:0;background:#f3f4f6;font-family:Arial,sans-serif;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="padding:30px 0;">
+        <tr>
+            <td align="center">
+
+                <!-- Main container -->
+                <table width="100%" max-width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:10px;padding:30px;box-shadow:0 4px 15px rgba(0,0,0,0.1);">
+
+                    <!-- Logo -->
+                    <tr>
+                        <td align="center" style="padding-bottom:20px;">
+                            <img src="https://yourdomain.com/static/images/logo.png" width="120" alt="Your Brand Logo" style="display:block;">
+                        </td>
+                    </tr>
+
+                    <!-- Header -->
+                    <tr>
+                        <td align="center" style="font-size:22px;font-weight:bold;color:#0f172a;padding-bottom:15px;">
+                            Booking Confirmation
+                        </td>
+                    </tr>
+
+                    <!-- Greeting -->
+                    <tr>
+                        <td style="font-size:14px;color:#555555;text-align:center;padding-bottom:20px;">
+                            Hi {{ booking.full_name }},<br>
+                            Thank you for booking <strong>{{ booking.celebrity.name }}</strong>. Below are your booking details.
+                        </td>
+                    </tr>
+
+                    <!-- Booking Details -->
+                    <tr>
+                        <td>
+                            <table width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;color:#555555;">
+                                <tr>
+                                    <td style="padding:5px 0;"><strong>Event Type:</strong> {{ booking.event_type }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:5px 0;"><strong>Event Date:</strong> {{ booking.event_date }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:5px 0;"><strong>Event Location:</strong> {{ booking.event_location }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:5px 0;"><strong>Budget:</strong> {{ booking.budget }}</td>
+                                </tr>
+                                {% if booking.addinfo %}
+                                <tr>
+                                    <td style="padding:5px 0;"><strong>Additional Info:</strong> {{ booking.addinfo }}</td>
+                                </tr>
+                                {% endif %}
+                                <tr>
+                                    <td style="padding:5px 0;"><strong>Status:</strong> {{ booking.get_status_display }}</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                  
+                    <!-- Footer -->
+                    <tr>
+                        <td style="font-size:12px;color:#999999;text-align:center;padding-top:20px;">
+                            If you did not make this booking, please contact support immediately.<br>
+                            &copy; {{ now.year }} Your Brand. All rights reserved.
+                        </td>
+                    </tr>
+
+                </table>
+
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -1,0 +1,419 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport"/>
+<title>StarBooking | Premium Celebrity Access</title>
+<link rel="icon" type="image/x-icon" href="{% static 'images/icoweb.png' %}">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f2cc0d",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#221f10",
+                    },
+                    fontFamily: {
+                        "display": ["Be Vietnam Pro", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            overflow-x: hidden;
+            width: 100%;
+            position: relative;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .star-gradient {
+            background: linear-gradient(180deg, rgba(34, 31, 16, 0) 0%, rgba(34, 31, 16, 0.9) 100%);
+        }
+        /* Hide scrollbar but keep functionality */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* Ensure all elements respect container width */
+        * {
+            max-width: 100vw;
+            box-sizing: border-box;
+        }
+        img, svg, video {
+            max-width: 100%;
+            height: auto;
+        }
+        /* Fix for marquee */
+        marquee {
+            display: block;
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white transition-colors duration-300 overflow-x-hidden">
+<!-- Navigation -->
+<header class="fixed top-0 w-full z-50 border-b border-white/10 bg-background-dark/80 backdrop-blur-md">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-4 relative">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 sm:gap-3">
+<div class="size-6 sm:size-8 text-primary flex-shrink-0">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-base sm:text-xl font-black tracking-tighter uppercase italic truncate">StarBooking</h2>
+</div>
+
+<!-- Desktop Navigation -->
+<nav class="hidden md:flex items-center gap-4 lg:gap-10 pe-5">
+<a class="text-primary text-sm font-medium underline underline-offset-4 whitespace-nowrap" href="{% url 'index' %}">Home</a>
+<a class="text-sm font-medium hover:text-primary transition-colors whitespace-nowrap" href="{% url 'celebrity_list' %}">Browse</a>
+<a class="text-sm font-medium hover:text-primary transition-colors whitespace-nowrap" href="{% url 'aboutus' %}">About Us</a>
+<a class="text-sm font-medium hover:text-primary transition-colors whitespace-nowrap" href="{% url 'info' %}">How it Works</a>
+<a class="text-sm font-medium hover:text-primary transition-colors whitespace-nowrap" href="{% url 'contactus' %}">Contact Us</a>
+</nav>
+
+<!-- Mobile Menu Button -->
+<button id="mobileMenuBtn" class="md:hidden text-white focus:outline-none" aria-label="Toggle menu">
+<span class="material-symbols-outlined text-3xl" id="menuIcon">menu</span>
+</button>
+</div>
+
+<!-- Mobile Dropdown Menu (Absolute) -->
+<div id="mobileMenu" class="md:hidden absolute left-0 right-0 top-full mt-0 px-4 sm:px-6 lg:px-10 transition-all duration-300 ease-in-out opacity-0 invisible -translate-y-2">
+<div class="bg-background-dark/95 backdrop-blur-md rounded-lg border border-white/10 shadow-xl overflow-hidden">
+<div class="flex flex-col space-y-1 p-4">
+<a class="text-primary text-base font-medium underline underline-offset-4 py-3 px-2 hover:bg-white/5 rounded" href="{% url 'index' %}">Home</a>
+<a class="text-white text-base font-medium hover:text-primary transition-colors py-3 px-2 hover:bg-white/5 rounded" href="{% url 'celebrity_list' %}">Browse</a>
+<a class="text-white text-base font-medium hover:text-primary transition-colors py-3 px-2 hover:bg-white/5 rounded" href="{% url 'aboutus' %}">About Us</a>
+<a class="text-white text-base font-medium hover:text-primary transition-colors py-3 px-2 hover:bg-white/5 rounded" href="{% url 'info' %}">How it Works</a>
+<a class="text-white text-base font-medium hover:text-primary transition-colors py-3 px-2 hover:bg-white/5 rounded" href="{% url 'contactus' %}">Contact Us</a>
+</div>
+</div>
+</div>
+</div>
+</header>
+
+<script>
+// Mobile menu toggle with smooth animation
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+const menuIcon = document.getElementById('menuIcon');
+
+mobileMenuBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = mobileMenu.classList.contains('opacity-100');
+    
+    if (!isOpen) {
+        // Open menu
+        mobileMenu.classList.remove('opacity-0', 'invisible', '-translate-y-2');
+        mobileMenu.classList.add('opacity-100', 'visible', 'translate-y-0');
+        menuIcon.textContent = 'close';
+    } else {
+        // Close menu
+        mobileMenu.classList.remove('opacity-100', 'visible', 'translate-y-0');
+        mobileMenu.classList.add('opacity-0', 'invisible', '-translate-y-2');
+        menuIcon.textContent = 'menu';
+    }
+});
+
+// Close menu when clicking outside
+document.addEventListener('click', (event) => {
+    if (!mobileMenuBtn.contains(event.target) && !mobileMenu.contains(event.target)) {
+        if (mobileMenu.classList.contains('opacity-100')) {
+            mobileMenu.classList.remove('opacity-100', 'visible', 'translate-y-0');
+            mobileMenu.classList.add('opacity-0', 'invisible', '-translate-y-2');
+            menuIcon.textContent = 'menu';
+        }
+    }
+});
+
+// Close menu on escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileMenu.classList.contains('opacity-100')) {
+        mobileMenu.classList.remove('opacity-100', 'visible', 'translate-y-0');
+        mobileMenu.classList.add('opacity-0', 'invisible', '-translate-y-2');
+        menuIcon.textContent = 'menu';
+    }
+});
+</script>
+
+<main class="pt-20 overflow-x-hidden">
+<!-- Hero Section -->
+<section class="relative px-4 sm:px-6 py-16 lg:py-32 overflow-hidden">
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-gradient-to-b from-background-dark/40 via-background-dark/80 to-background-dark"></div>
+<div class="w-full h-full bg-[url('https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&amp;fit=crop&amp;q=80&amp;w=2070')] bg-cover bg-center opacity-40" data-alt="High-end red carpet event atmosphere blurred background"></div>
+</div>
+<div class="relative z-10 max-w-4xl mx-auto text-center space-y-6 sm:space-y-8">
+<div class="space-y-3 sm:space-y-4">
+<h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black leading-tight tracking-tight text-white px-2">
+                        Access the <span class="text-primary italic">Extraordinary.</span>
+</h1>
+<p class="text-base sm:text-lg lg:text-xl text-slate-300 max-w-2xl mx-auto font-light px-4">
+                        Book A-List talent for private performances, keynote speeches, and personalized video messages.
+                    </p>
+</div>
+<!-- Search Component -->
+<div class="max-w-2xl mx-auto px-4 sm:px-0">
+<div class="flex flex-col sm:flex-row items-stretch gap-2 sm:gap-0 bg-[#342f18] rounded-xl border border-white/10 shadow-2xl overflow-hidden p-1">
+<div class="flex items-center px-4 text-primary sm:flex">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="w-full bg-transparent border-none focus:ring-0 text-white placeholder:text-slate-500 py-3 sm:py-4 px-4 sm:px-0 text-base font-light" placeholder="Search for your favorite star..." id="searchInput" type="text"/>
+<button class="bg-primary text-background-dark font-bold px-6 sm:px-8 py-3 rounded-lg hover:brightness-110 transition-all m-1" id="searchBtn">
+                            Search
+                        </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Categories Chips -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
+      <p class="text-center pb-3 sm:pb-5 text-sm sm:text-base">YOU CAN BOOK..</p>
+<div class="flex gap-3 sm:gap-4 p-1 sm:p-2 overflow-x-auto no-scrollbar justify-start sm:justify-center">
+<div class="flex h-10 sm:h-11 shrink-0 items-center justify-center gap-x-1 sm:gap-x-2 rounded-full bg-white/5 border border-white/10 px-4 sm:px-6 cursor-pointer hover:bg-primary/20 hover:border-primary/50 transition-all group">
+<span class="material-symbols-outlined text-primary text-base sm:text-lg">sports_basketball</span>
+<p class="text-white text-xs sm:text-sm font-medium whitespace-nowrap">Athletes</p>
+</div>
+<div class="flex h-10 sm:h-11 shrink-0 items-center justify-center gap-x-1 sm:gap-x-2 rounded-full bg-white/5 border border-white/10 px-4 sm:px-6 cursor-pointer hover:bg-primary/20 hover:border-primary/50 transition-all">
+<span class="material-symbols-outlined text-primary text-base sm:text-lg">music_note</span>
+<p class="text-white text-xs sm:text-sm font-medium whitespace-nowrap">Musicians</p>
+</div>
+<div class="flex h-10 sm:h-11 shrink-0 items-center justify-center gap-x-1 sm:gap-x-2 rounded-full bg-white/5 border border-white/10 px-4 sm:px-6 cursor-pointer hover:bg-primary/20 hover:border-primary/50 transition-all">
+<span class="material-symbols-outlined text-primary text-base sm:text-lg">movie</span>
+<p class="text-white text-xs sm:text-sm font-medium whitespace-nowrap">Actors</p>
+</div>
+<div class="flex h-10 sm:h-11 shrink-0 items-center justify-center gap-x-1 sm:gap-x-2 rounded-full bg-white/5 border border-white/10 px-4 sm:px-6 cursor-pointer hover:bg-primary/20 hover:border-primary/50 transition-all">
+<span class="material-symbols-outlined text-primary text-base sm:text-lg">podcasts</span>
+<p class="text-white text-xs sm:text-sm font-medium whitespace-nowrap">Influencers</p>
+</div>
+<div class="flex h-10 sm:h-11 shrink-0 items-center justify-center gap-x-1 sm:gap-x-2 rounded-full bg-white/5 border border-white/10 px-4 sm:px-6 cursor-pointer hover:bg-primary/20 hover:border-primary/50 transition-all">
+<span class="material-symbols-outlined text-primary text-base sm:text-lg">theater_comedy</span>
+<p class="text-white text-xs sm:text-sm font-medium whitespace-nowrap">Comedians</p>
+</div>
+<div class="flex h-10 sm:h-11 shrink-0 items-center justify-center gap-x-1 sm:gap-x-2 rounded-full bg-white/5 border border-white/10 px-4 sm:px-6 cursor-pointer hover:bg-primary/20 hover:border-primary/50 transition-all">
+<span class="material-symbols-outlined text-primary text-base sm:text-lg">record_voice_over</span>
+<p class="text-white text-xs sm:text-sm font-medium whitespace-nowrap">Speakers</p>
+</div>
+</div>
+</section>
+<!-- Featured Section Header -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 mt-8 sm:mt-10" id="celebrities">
+<div class="flex flex-col sm:flex-row items-start sm:items-end justify-between border-b border-white/10 pb-4 sm:pb-6 gap-3 sm:gap-0">
+<div class="space-y-1">
+<h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight uppercase">Featured A-List Stars</h2>
+<p class="text-slate-400 font-light text-sm sm:text-base">Exclusive access to global icons available for booking</p>
+</div>
+<a class="text-primary text-sm font-bold flex items-center gap-2 hover:underline" href="{% url 'celebrity_list' %}">
+                    View All <span class="material-symbols-outlined text-base">arrow_forward</span>
+</a>
+</div>
+</section>
+
+<!-- Image Grid -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12" >
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+    
+<!-- Card 1 -->
+ {% for celeb in celebindex %}
+<div class="group relative aspect-[3/4] overflow-hidden rounded-xl bg-slate-800 shadow-xl transition-all hover:-translate-y-2 cursor-pointer celeb-card" data-search="{{ celeb.name|lower }} actress hollywood movie film">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Close-up portrait of a famous actress" style="background-image: url('{{ celeb.image.url }}'); background-repeat: no-repeat; background-size:cover;"></div>
+<div class="absolute inset-0 star-gradient"></div>
+<div class="absolute bottom-0 left-0 right-0 p-4 sm:p-6 space-y-1 sm:space-y-2">
+<div class="flex items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-xs sm:text-sm fill-1">star</span>
+<span class="text-[10px] sm:text-xs font-bold">4.9</span>
+</div>
+<h3 class="text-lg sm:text-xl font-bold text-white leading-tight"><a href="../Project1/scarletjohanson.html">{{ celeb.name }}</a></h3>
+<p class="text-primary/80 text-[10px] sm:text-xs font-semibold uppercase tracking-wider">Hollywood Actress</p>
+<div class="pt-2 sm:pt-4 flex items-center justify-between">
+<span class="text-white/60 text-[10px] sm:text-xs italic">Starts at $15,000</span>
+<button class="bg-white/10 hover:bg-primary hover:text-background-dark p-1.5 sm:p-2 rounded-lg transition-colors">
+<a href="{% url 'celebrity_detail' celeb.slug %}" class="material-symbols-outlined text-xs sm:text-sm">Book</a>
+</button>
+</div>
+</div>
+</div>
+{% endfor %}
+
+
+
+<div id="noResultsMessage" class="text-center text-white text-lg py-4 hidden col-span-full">
+  No results found.
+</div>
+
+</section>
+<!-- How it works -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+<div class="bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-10 lg:p-20 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-48 sm:w-64 h-48 sm:h-64 bg-primary/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
+<div class="text-center mb-10 sm:mb-16">
+<h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-white mb-3 sm:mb-4 uppercase tracking-tighter">Simple Steps to Book</h2>
+<p class="text-slate-400 font-light text-sm sm:text-base max-w-xl mx-auto px-2">Seamlessly connect with the world's most influential people in three simple steps.</p>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-12 text-center relative z-10">
+<div class="space-y-4 sm:space-y-6">
+<div class="size-12 sm:size-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto ring-1 ring-primary/30">
+<span class="material-symbols-outlined text-primary text-xl sm:text-3xl">search</span>
+</div>
+<h3 class="text-lg sm:text-xl font-bold text-white italic">Discover Talent</h3>
+<p class="text-slate-400 font-light text-xs sm:text-sm leading-relaxed px-2">
+                            Search our curated database of A-list celebrities across sports, music, and film.
+                        </p>
+</div>
+<div class="space-y-4 sm:space-y-6">
+<div class="size-12 sm:size-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto ring-1 ring-primary/30">
+<span class="material-symbols-outlined text-primary text-xl sm:text-3xl">calendar_month</span>
+</div>
+<h3 class="text-lg sm:text-xl font-bold text-white italic">Customize Request</h3>
+<p class="text-slate-400 font-light text-xs sm:text-sm leading-relaxed px-2">
+                            Specify your event type, date, and budget. Our concierge handles the logistics.
+                        </p>
+</div>
+<div class="space-y-4 sm:space-y-6">
+<div class="size-12 sm:size-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto ring-1 ring-primary/30">
+<span class="material-symbols-outlined text-primary text-xl sm:text-3xl">verified_user</span>
+</div>
+<h3 class="text-lg sm:text-xl font-bold text-white italic">Secure Booking</h3>
+<p class="text-slate-400 font-light text-xs sm:text-sm leading-relaxed px-2">
+                            Finalize with iron-clad contracts and secure payments backed by our premium guarantee.
+                        </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Trust / Partners Footer -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-20 border-t border-white/10">
+    <marquee behavior="" direction="left" scrollamount="5" class="w-full">
+<div class="flex items-center justify-around gap-6 sm:gap-8 md:gap-12 opacity-50 grayscale">
+<span class="text-white font-bold text-lg sm:text-xl md:text-2xl tracking-widest italic whitespace-nowrap">WARNER BROS</span>
+<span class="text-white font-bold text-lg sm:text-xl md:text-2xl tracking-widest italic whitespace-nowrap">NETFLIX</span>
+<span class="text-white font-bold text-lg sm:text-xl md:text-2xl tracking-widest italic whitespace-nowrap">ADIDAS</span>
+<span class="text-white font-bold text-lg sm:text-xl md:text-2xl tracking-widest italic whitespace-nowrap">NIKE</span>
+<span class="text-white font-bold text-lg sm:text-xl md:text-2xl tracking-widest italic whitespace-nowrap">UNIVERSAL</span>
+</div>
+</marquee>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-black/40 py-12 sm:py-20 border-t border-white/5 overflow-x-hidden">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12">
+<div class="space-y-4 sm:space-y-6">
+<div class="flex items-center gap-2 sm:gap-3">
+<div class="size-5 sm:size-6 text-primary flex-shrink-0">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-base sm:text-lg font-black tracking-tighter uppercase italic">StarBooking</h2>
+</div>
+<p class="text-slate-400 text-xs sm:text-sm font-light leading-relaxed">
+                    The world's leading premium platform for celebrity talent procurement. Connecting extraordinary talent with extraordinary events.
+                </p>
+</div>
+<div>
+<h4 class="text-white font-bold mb-4 sm:mb-6 italic text-sm sm:text-base">LINKS</h4>
+<ul class="space-y-2 sm:space-y-4 text-xs sm:text-sm text-slate-400 font-light">
+<li><a class="hover:text-primary transition-colors" href="{% url 'index' %}">Home</a></li>
+<li><a class="hover:text-primary transition-colors" href="{% url 'celebrity_list' %}">Browse</a></li>
+<li><a class="hover:text-primary transition-colors" href="{% url 'aboutus' %}">About Us</a></li>
+<li><a class="hover:text-primary transition-colors" href="{% url 'info' %}">How It Works</a></li>
+<li><a class="hover:text-primary transition-colors" href="{% url 'contactus' %}">Contact Us</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-bold mb-4 sm:mb-6 italic text-sm sm:text-base">Support</h4>
+<ul class="space-y-2 sm:space-y-4 text-xs sm:text-sm text-slate-400 font-light">
+<li><a class="hover:text-primary transition-colors" href="{% url 'privacypolicy' %}">Privacy Policy</a></li>
+<li><a class="hover:text-primary transition-colors" href="{% url 'termsandconditions' %}">Terms of Service</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-bold mb-4 sm:mb-6 italic text-sm sm:text-base">Stay Updated</h4>
+<div class="flex flex-col sm:flex-row">
+<input class="bg-white/5 border border-white/10 rounded-l-lg px-3 sm:px-4 py-2 text-xs sm:text-sm w-full focus:ring-primary focus:border-primary" placeholder="Email address" type="email"/>
+<button class="bg-primary text-background-dark px-3 sm:px-4 py-2 rounded-r-lg font-bold mt-2 sm:mt-0">
+<span class="material-symbols-outlined text-xs sm:text-sm">send</span>
+</button>
+</div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 mt-12 sm:mt-20 pt-6 sm:pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500 text-[10px] sm:text-xs uppercase tracking-widest">
+<p>© 2024 StarBooking International. All rights reserved.</p>
+<div class="flex gap-4 sm:gap-8">
+<a class="hover:text-white transition-colors" href="#">Instagram</a>
+<a class="hover:text-white transition-colors" href="#">LinkedIn</a>
+<a class="hover:text-white transition-colors" href="#">Twitter (X)</a>
+</div>
+</div>
+</footer>
+
+<script>
+const searchInput = document.getElementById("searchInput");
+const cards = document.querySelectorAll(".celeb-card");
+const noResults = document.getElementById("noResultsMessage");
+
+// Make sure cards are visible initially
+cards.forEach(card => {
+  card.style.display = "block";
+});
+
+searchInput.addEventListener("input", () => {
+  const query = searchInput.value.toLowerCase().trim();
+  let found = false; // track if any match is found
+
+  cards.forEach(card => {
+    // Get name from the card for search
+    const name = card.querySelector('h3 a')?.textContent.toLowerCase() || '';
+    // Check if query matches name
+    const isMatch = name.includes(query);
+    card.style.display = isMatch ? "block" : "none";
+    if (isMatch) found = true;
+  });
+
+  // Show or hide the no results message
+  noResults.style.display = found ? "none" : "block";
+  
+  // Ensure noResults spans full width
+  if (!found) {
+    noResults.classList.add('col-span-full');
+  }
+});
+
+// Trigger initial state
+searchInput.dispatchEvent(new Event('input'));
+</script>
+
+<script>
+  const searchBtn = document.getElementById("searchBtn");
+  const targetSection = document.getElementById("celebrities");
+
+  searchBtn.addEventListener("click", () => {
+    targetSection.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  });
+</script>
+
+</body></html>

@@ -1,0 +1,624 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Browse Celebrities | EliteStars</title>
+<link rel="icon" type="image/x-icon" href="{% static 'images/icoweb.png' %}">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f2cc0d",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#121210",
+                        "card-dark": "#1e1b0d",
+                        "border-dark": "#36321d"
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-effect {
+            background: rgba(45, 42, 25, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(242, 204, 13, 0.1);
+        }
+        .celebrity-card:hover .overlay-btn {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Smooth mobile menu transitions */
+        .mobile-menu {
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white antialiased transition-colors duration-300">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 w-full glass-effect border-b border-border-dark px-6 md:px-12 py-3">
+<div class="max-w-[1440px] mx-auto">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="size-8 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-xl font-black tracking-tighter uppercase italic">StarBooking</h2>
+</div>
+
+<!-- Desktop Navigation -->
+<nav class="hidden md:flex items-center gap-10 pe-5">
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="{% url 'index' %}">Home</a>
+<a class="text-primary text-sm font-medium underline underline-offset-4" href="{% url 'celebrity_list' %}">Browse</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="{% url 'aboutus' %}">About Us</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="{% url 'info' %}">How It Works</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="{% url 'contactus' %}">Contact Us</a>
+</nav>
+
+<!-- Mobile Menu Button -->
+<button id="mobileMenuBtn" class="md:hidden text-white focus:outline-none" aria-label="Toggle menu">
+<span class="material-symbols-outlined text-3xl" id="menuIcon">menu</span>
+</button>
+</div>
+
+<!-- Mobile Dropdown Menu -->
+<div id="mobileMenu" class="md:hidden absolute left-0 right-0 top-full mt-3 px-6 md:px-12 transition-all duration-300 ease-in-out opacity-0 invisible -translate-y-2 mobile-menu">
+<div class="glass-effect bg-background-dark border-border-dark rounded-lg overflow-hidden shadow-2xl">
+<div class="flex flex-col space-y-1 p-4">
+<a class="text-sm font-semibold hover:text-primary transition-colors py-3 px-2 hover:bg-white/5 rounded" href="{% url 'index' %}">Home</a>
+<a class="text-primary text-sm font-medium underline underline-offset-4 py-3 px-2 hover:bg-white/5 rounded" href="{% url 'celebrity_list' %}">Browse</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors py-3 px-2 hover:bg-white/5 rounded" href="{% url 'aboutus' %}">About Us</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors py-3 px-2 hover:bg-white/5 rounded" href="{% url 'info' %}">How It Works</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors py-3 px-2 hover:bg-white/5 rounded" href="{% url 'contactus' %}">Contact Us</a>
+</div>
+</div>
+</div>
+</div>
+</header>
+
+<script>
+// Mobile menu toggle with smooth animation
+document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuIcon = document.getElementById('menuIcon');
+
+    if (mobileMenuBtn && mobileMenu && menuIcon) {
+        mobileMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = mobileMenu.classList.contains('opacity-100');
+            
+            if (!isOpen) {
+                // Open menu
+                mobileMenu.classList.remove('opacity-0', 'invisible', '-translate-y-2');
+                mobileMenu.classList.add('opacity-100', 'visible', 'translate-y-0');
+                menuIcon.textContent = 'close';
+            } else {
+                // Close menu
+                mobileMenu.classList.remove('opacity-100', 'visible', 'translate-y-0');
+                mobileMenu.classList.add('opacity-0', 'invisible', '-translate-y-2');
+                menuIcon.textContent = 'menu';
+            }
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!mobileMenuBtn.contains(event.target) && !mobileMenu.contains(event.target)) {
+                if (mobileMenu.classList.contains('opacity-100')) {
+                    mobileMenu.classList.remove('opacity-100', 'visible', 'translate-y-0');
+                    mobileMenu.classList.add('opacity-0', 'invisible', '-translate-y-2');
+                    menuIcon.textContent = 'menu';
+                }
+            }
+        });
+
+        // Close menu on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileMenu.classList.contains('opacity-100')) {
+                mobileMenu.classList.remove('opacity-100', 'visible', 'translate-y-0');
+                mobileMenu.classList.add('opacity-0', 'invisible', '-translate-y-2');
+                menuIcon.textContent = 'menu';
+            }
+        });
+    }
+});
+</script>
+
+<main class="max-w-[1440px] mx-auto flex gap-8 px-6 md:px-12 py-8">
+<!-- Sidebar Navigation (Filters) -->
+
+<!-- Main Content Grid -->
+<section class="flex-1 flex flex-col gap-6">
+<!-- Search and Sort Bar -->
+<div class="flex flex-col md:flex-row items-center gap-4">
+<div class="relative flex-1 w-full">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input id="search-celebrities" class="w-full bg-card-dark border-border-dark focus:border-primary focus:ring-1 focus:ring-primary rounded-xl pl-12 pr-10 py-4 text-sm transition-all placeholder:text-slate-500" placeholder="Search celebrities by name, talent, price (e.g., >$1000, 500-1500)..." type="search" aria-label="Search celebrities"/>
+<!-- Removed stray submit button that broke nothing but wasn't needed -->
+</div>
+
+</div>
+<!-- Tab Navigation -->
+
+<!-- Image Grid -->
+<div id="celebrities-grid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+<!-- Card 1 -->
+ {% for celeb in celebrities %}
+<div class="celebrity-card group relative bg-card-dark rounded-xl border border-border-dark overflow-hidden hover:border-primary/40 transition-all duration-300">
+<div class="aspect-[3/4] overflow-hidden relative">
+<img alt="Male celebrity headshot" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Professional studio portrait of a male actor" src="{{ celeb.image.url }}"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-80"></div>
+<div class="absolute top-4 right-4 bg-background-dark/80 backdrop-blur-md px-2 py-1 rounded flex items-center gap-1 border border-border-dark">
+<span class="material-symbols-outlined text-primary text-xs fill-[1]">star</span>
+<span class="text-[10px] font-bold">4.9</span>
+</div>
+<div class="overlay-btn absolute inset-0 flex items-center justify-center opacity-0 transition-all duration-300 translate-y-4">
+<a href="{% url 'celebrity_detail' celeb.slug %}" class="px-6 py-2.5 bg-primary text-background-dark font-black text-xs rounded-full shadow-2xl hover:scale-105 transition-transform">VIEW PROFILE</a>
+</div>
+</div>
+<div class="p-5">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-lg font-bold">{{ celeb.name }}</h3>
+<p class="text-xs text-slate-400 font-medium">{{ celeb.category }}</p>
+</div>
+<p class="text-sm font-black text-primary">$1,200</p>
+</div>
+<div class="mt-4 flex items-center gap-4">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-slate-400 text-sm">schedule</span>
+<span class="text-[10px] text-slate-400 font-bold uppercase">24h Response</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-slate-400 text-sm">verified</span>
+<span class="text-[10px] text-slate-400 font-bold uppercase">Verified</span>
+</div>
+</div>
+</div>
+</div>
+{% endfor %}
+
+
+
+</div>
+<!-- Show More Section -->
+<div class="flex flex-col items-center py-12 gap-4">
+<p id="showing-text" class="text-sm text-slate-400"></p>
+<div class="w-64 h-1 bg-border-dark rounded-full overflow-hidden">
+<div id="progress-bar" class="h-full bg-primary" style="width: 0%"></div>
+</div>
+<button id="load-more-btn" class="mt-4 px-10 py-4 border-2 border-primary text-primary font-black tracking-widest text-xs rounded-full hover:bg-primary hover:text-background-dark transition-all active:scale-95">
+                    LOAD MORE CELEBRITIES
+                </button>
+</div>
+</section>
+</main>
+<!-- Simple Dark Footer -->
+<footer class="bg-black/40 py-20 border-t border-white/5">
+<div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
+<div class="space-y-6">
+<div class="flex items-center gap-3">
+<div class="size-6 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-lg font-black tracking-tighter uppercase italic">StarBooking</h2>
+</div>
+<p class="text-slate-400 text-sm font-light leading-relaxed">
+                    The world's leading premium platform for celebrity talent procurement. Connecting extraordinary talent with extraordinary events.
+                </p>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6 italic">LINKS</h4>
+<ul class="space-y-4 text-sm text-slate-400 font-light">
+<li><a class="hover:text-primary transition-colors" href="{% url 'index' %}">Home</a></li>
+<li><a class="hover:text-primary transition-colors" href="{% url 'celebrity_list' %}">Browse</a></li>
+<li><a class="hover:text-primary transition-colors" href="{% url 'aboutus' %}">About Us</a></li>
+<li><a class="hover:text-primary transition-colors" href="{% url 'info' %}">How It Works</a></li>
+<li><a class="hover:text-primary transition-colors" href="{% url 'contactus' %}">Contact Us</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6 italic">Support</h4>
+<ul class="space-y-4 text-sm text-slate-400 font-light">
+<li><a class="hover:text-primary transition-colors" href="{% url 'privacypolicy' %}">Privacy Policy</a></li>
+<li><a class="hover:text-primary transition-colors" href="{% url 'termsandconditions' %}">Terms of Service</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6 italic">Stay Updated</h4>
+<div class="flex">
+<input class="bg-white/5 border border-white/10 rounded-l-lg px-4 py-2 text-sm w-full focus:ring-primary focus:border-primary" placeholder="Email address" type="email"/>
+<button class="bg-primary text-background-dark px-4 py-2 rounded-r-lg font-bold">
+<span class="material-symbols-outlined text-sm">send</span>
+</button>
+</div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto px-6 mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500 text-xs uppercase tracking-widest">
+<p>© 2024 StarBooking International. All rights reserved.</p>
+<div class="flex gap-8">
+<a class="hover:text-white transition-colors" href="#">Instagram</a>
+<a class="hover:text-white transition-colors" href="#">LinkedIn</a>
+<a class="hover:text-white transition-colors" href="#">Twitter (X)</a>
+</div>
+</div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Track current state
+    let currentPage = 1;
+    const itemsPerPage = 6;
+    let totalCelebrities = 0; // Will be calculated automatically
+    let allCards = [];
+    
+    // Function to count and update totals
+    function updateCardCounts() {
+        const gridContainer = document.getElementById('celebrities-grid');
+        if (!gridContainer) return;
+        
+        // Get all celebrity cards
+        allCards = Array.from(gridContainer.querySelectorAll('.celebrity-card'));
+        totalCelebrities = allCards.length;
+        
+        console.log(`Found ${totalCelebrities} celebrity cards`);
+        
+        return totalCelebrities;
+    }
+    
+    // Hide all cards except first 6
+    function hideExtraCards() {
+        allCards.forEach((card, index) => {
+            if (index >= itemsPerPage) {
+                card.style.display = 'none';
+            } else {
+                card.style.display = 'block';
+            }
+        });
+    }
+    
+    // Show more cards
+    function showMoreCards() {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        
+        // Show next batch of cards
+        for (let i = startIndex; i < Math.min(endIndex, totalCelebrities); i++) {
+            if (allCards[i]) {
+                allCards[i].style.display = 'block';
+            }
+        }
+        
+        // Calculate showing count
+        const showingCount = Math.min(currentPage * itemsPerPage, totalCelebrities);
+        return showingCount;
+    }
+    
+    // Update progress bar and showing text
+    function updateUI(showingCount) {
+        const progressBar = document.getElementById('progress-bar');
+        const showingText = document.getElementById('showing-text');
+        const loadMoreBtn = document.getElementById('load-more-btn');
+        
+        if (!progressBar || !showingText || !loadMoreBtn) return;
+        
+        // Update showing text
+        showingText.textContent = `Showing ${showingCount} of ${totalCelebrities} Elite Celebrities`;
+        
+        // Update progress bar
+        const progressPercentage = totalCelebrities > 0 ? 
+            Math.min((showingCount / totalCelebrities) * 100, 100) : 0;
+        progressBar.style.width = `${progressPercentage}%`;
+        
+        // Update button state
+        if (showingCount >= totalCelebrities) {
+            loadMoreBtn.disabled = true;
+            loadMoreBtn.textContent = 'ALL CELEBRITIES LOADED';
+            loadMoreBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            loadMoreBtn.classList.remove('hover:bg-primary', 'hover:text-background-dark');
+        } else {
+            loadMoreBtn.disabled = false;
+            loadMoreBtn.textContent = 'LOAD MORE CELEBRITIES';
+            loadMoreBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            loadMoreBtn.classList.add('hover:bg-primary', 'hover:text-background-dark');
+        }
+    }
+    
+    // Function to load more celebrities
+    function loadMoreCelebrities() {
+        const loadMoreBtn = document.getElementById('load-more-btn');
+        
+        if (!loadMoreBtn) return;
+        
+        // Disable button and show loading state
+        loadMoreBtn.disabled = true;
+        loadMoreBtn.textContent = 'LOADING...';
+        loadMoreBtn.classList.add('opacity-50');
+        
+        // Simulate network delay
+        setTimeout(() => {
+            currentPage++;
+            
+            // Show more cards
+            const showingCount = showMoreCards();
+            
+            // Update UI
+            updateUI(showingCount);
+        }, 500); // Simulated loading time
+    }
+    
+    // Initialize page
+    function initializePage() {
+        // Update card counts
+        updateCardCounts();
+        
+        if (totalCelebrities === 0) {
+            console.warn('No celebrity cards found!');
+            return;
+        }
+        
+        // Hide extra cards (show only first 6)
+        hideExtraCards();
+        
+        // Calculate initial showing count
+        const initialShowingCount = Math.min(itemsPerPage, totalCelebrities);
+        
+        // Update UI
+        updateUI(initialShowingCount);
+        
+        console.log(`Initialized: Showing ${initialShowingCount} of ${totalCelebrities} celebrities`);
+    }
+    
+    // Mutation Observer to detect when new cards are added
+    function setupMutationObserver() {
+        const gridContainer = document.getElementById('celebrities-grid');
+        if (!gridContainer) return;
+        
+        const observer = new MutationObserver(function(mutations) {
+            let shouldUpdate = false;
+            
+            mutations.forEach(function(mutation) {
+                if (mutation.type === 'childList') {
+                    // Check if new celebrity cards were added
+                    if (mutation.addedNodes.length > 0) {
+                        const hasNewCards = Array.from(mutation.addedNodes).some(node => 
+                            node.classList && node.classList.contains('celebrity-card')
+                        );
+                        if (hasNewCards) {
+                            shouldUpdate = true;
+                        }
+                    }
+                }
+            });
+            
+            if (shouldUpdate) {
+                console.log('New cards detected, updating counts...');
+                // Wait a bit for DOM to be fully updated
+                setTimeout(() => {
+                    updateCardCounts();
+                    const currentShowing = Math.min(currentPage * itemsPerPage, totalCelebrities);
+                    updateUI(currentShowing);
+                }, 100);
+            }
+        });
+        
+        // Start observing
+        observer.observe(gridContainer, {
+            childList: true,
+            subtree: true
+        });
+        
+        return observer;
+    }
+    
+    // Add event listener to the load more button
+    const loadMoreButton = document.getElementById('load-more-btn');
+    if (loadMoreButton) {
+        loadMoreButton.addEventListener('click', loadMoreCelebrities);
+    }
+    
+
+    
+    // Search Functionality
+    function setupSearchFunctionality() {
+        const searchInput = document.getElementById('search-celebrities');
+        const gridContainer = document.getElementById('celebrities-grid');
+        
+        if (!searchInput || !gridContainer) return;
+        
+        // Create clear button
+        const clearButton = document.createElement('button');
+        clearButton.innerHTML = '<span class="material-symbols-outlined">close</span>';
+        clearButton.className = 'absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-primary cursor-pointer hidden';
+        clearButton.type = 'button';
+        clearButton.style.background = 'none';
+        clearButton.style.border = 'none';
+        clearButton.style.padding = '0';
+        clearButton.setAttribute('aria-label', 'Clear search');
+        
+        // Add clear button to search container
+        searchInput.parentElement.appendChild(clearButton);
+        
+        // Function to perform search
+        function performSearch(searchTerm) {
+            const cards = Array.from(gridContainer.querySelectorAll('.celebrity-card'));
+            const lowerSearchTerm = searchTerm.toLowerCase().trim();
+            
+            // If search is empty, show all cards that should be visible based on pagination
+            if (!lowerSearchTerm) {
+                // Reset to show cards based on pagination
+                cards.forEach((card, index) => {
+                    const shouldShow = index < (currentPage * itemsPerPage);
+                    card.style.display = shouldShow ? 'block' : 'none';
+                });
+                
+                // Update showing text
+                const showingCount = Math.min(currentPage * itemsPerPage, totalCelebrities);
+                updateUI(showingCount);
+                
+                // Show load more button
+                const loadMoreBtn = document.getElementById('load-more-btn');
+                if (loadMoreBtn) {
+                    loadMoreBtn.style.display = 'block';
+                }
+                return;
+            }
+            
+            let visibleCount = 0;
+            
+            // Search through cards
+            cards.forEach(card => {
+                const name = card.querySelector('h3')?.textContent?.toLowerCase() || '';
+                const profession = card.querySelector('p.text-slate-400')?.textContent?.toLowerCase() || '';
+                const priceText = card.querySelector('p.text-primary')?.textContent || '';
+                const price = parseInt(priceText.replace(/[^0-9]/g, '')) || 0;
+                
+                // Check if the card matches the search term
+                const matches = name.includes(lowerSearchTerm) || 
+                               profession.includes(lowerSearchTerm) ||
+                               searchByPrice(lowerSearchTerm, price);
+                
+                if (matches) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Update showing text for search results
+            const showingText = document.getElementById('showing-text');
+            const loadMoreBtn = document.getElementById('load-more-btn');
+            
+            if (showingText) {
+                showingText.textContent = `Showing ${visibleCount} search result${visibleCount !== 1 ? 's' : ''} for "${searchTerm}"`;
+            }
+            
+            if (loadMoreBtn) {
+                loadMoreBtn.style.display = 'none';
+            }
+            
+            // Update progress bar for search
+            const progressBar = document.getElementById('progress-bar');
+            if (progressBar) {
+                progressBar.style.width = visibleCount > 0 ? '100%' : '0%';
+            }
+        }
+        
+        // Helper function to search by price
+        function searchByPrice(searchTerm, price) {
+            // Check if search term contains numbers
+            const numbersInSearch = searchTerm.match(/\d+/g);
+            if (!numbersInSearch) return false;
+            
+            // Check for exact price match
+            for (const num of numbersInSearch) {
+                if (parseInt(num) === price) {
+                    return true;
+                }
+            }
+            
+            // Check for price range (e.g., "1000-2000")
+            if (searchTerm.includes('-')) {
+                const rangeMatch = searchTerm.match(/(\d+)\s*-\s*(\d+)/);
+                if (rangeMatch) {
+                    const min = parseInt(rangeMatch[1]) || 0;
+                    const max = parseInt(rangeMatch[2]) || Infinity;
+                    return price >= min && price <= max;
+                }
+            }
+            
+            // Check for comparison operators
+            if (searchTerm.includes('>') || searchTerm.includes('<')) {
+                const operator = searchTerm.includes('>') ? '>' : '<';
+                const priceValue = parseInt(searchTerm.replace(/[^0-9]/g, '')) || 0;
+                
+                if (operator === '>') {
+                    return price > priceValue;
+                } else {
+                    return price < priceValue;
+                }
+            }
+            
+            return false;
+        }
+        
+        // Debounce function to prevent too many searches while typing
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+        
+        // Add event listener with debouncing
+        searchInput.addEventListener('input', debounce(function(e) {
+            const searchTerm = e.target.value;
+            performSearch(searchTerm);
+            
+            // Show/hide clear button
+            if (searchTerm.trim()) {
+                clearButton.classList.remove('hidden');
+            } else {
+                clearButton.classList.add('hidden');
+            }
+        }, 300)); // 300ms delay
+        
+        // Also search on Enter key
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch(e.target.value);
+            }
+        });
+        
+        // Clear search when clear button is clicked
+        clearButton.addEventListener('click', function() {
+            searchInput.value = '';
+            clearButton.classList.add('hidden');
+            performSearch('');
+            
+            // Reset to normal view
+            const loadMoreBtn = document.getElementById('load-more-btn');
+            if (loadMoreBtn) {
+                loadMoreBtn.style.display = 'block';
+                const showingCount = Math.min(currentPage * itemsPerPage, totalCelebrities);
+                updateUI(showingCount);
+            }
+        });
+    }
+    
+    // Initialize everything — removed the undefined function call
+    initializePage();
+    setupMutationObserver();
+    setupSearchFunctionality();
+});
+</script>
+</body>
+</html>

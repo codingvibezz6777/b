@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'images/icoweb.png' %}">
+</head>
+<body>
+    <h2>Bookings</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Client</th>
+            <th>Celebrity</th>
+            <th>Event Date</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for booking in bookings %}
+        <tr>
+            <td>{{ booking.full_name }}</td>
+            <td>{{ booking.celebrity.name }}</td>
+            <td>{{ booking.event_date }}</td>
+            <td>{{ booking.status|title }}</td>
+            <td>
+                {% if booking.status == 'pending' %}
+                    <a href="{% url 'approve_booking' booking.id %}">Approve</a>
+                    |
+                    <a href="{% url 'reject_booking' booking.id %}">Reject</a>
+                {% else %}
+                    —
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">No bookings yet</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+</body>
+</html>

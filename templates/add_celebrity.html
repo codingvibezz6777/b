@@ -1,0 +1,322 @@
+{% load widget_tweaks %}
+{% load static %}
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Add Celebrity Detailed Form - Admin | StarBooking</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Noto+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link rel="icon" type="image/x-icon" href="{% static 'images/icoweb.png' %}">
+<script id="tailwind-config">
+
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f2cc0d",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#121212",
+                        "card-dark": "#1e1e1e",
+                        "border-dark": "#333333",
+                        "input-dark": "#262626",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Serif", "serif"],
+                        "sans": ["Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Noto Sans', sans-serif;
+        }
+        h1, h2, h3, .font-display {
+            font-family: 'Noto Serif', serif;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #121212;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #333333;
+            border-radius: 10px;
+        }
+        .form-input-focus:focus {
+            border-color: #f2cc0d !important;
+            ring-color: #f2cc0d !important;
+            outline: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<!-- Top Navigation Bar -->
+<header class="h-20 border-b border-border-dark bg-background-light dark:bg-card-dark px-4 lg:px-10 py-3 sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-8 h-full flex items-center justify-between">
+<div class="flex items-center gap-3 text-background-dark dark:text-white cursor-pointer hover:opacity-80 transition-opacity">
+<div class="size-6 text-primary">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z"></path>
+</svg>
+</div>
+<h2 class="text-xl font-bold leading-tight tracking-[-0.015em]">StarBooking</h2>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm font-semibold transition-colors" href="{% url 'dashboard' %}">Dashboard</a>
+<a class="nav-link-active text-sm font-bold transition-colors" href="{% url 'celeb_all' %}">Celebrities</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm font-semibold transition-colors" href="{% url 'bookings' %}">Bookings</a>
+</nav>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-3 pr-4 border-r border-slate-200 dark:border-white/10">
+<a href="{% url 'user_profile' %}"><div class="text-right hidden sm:block">
+<p class="text-xs font-bold dark:text-white leading-none">Admin User</p>
+<p class="text-[10px] text-slate-500 mt-1">Super Admin</p>
+</div></a>
+<div class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center overflow-hidden">
+<img alt="Admin Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcT307JC4VzWBaHYUCcEP7OSz7jQx56Fz3kWUMo_IXqUH3lY6Gv6klHiJSbBXCPWGOsLGhDhbi0384S0K6ILkQpWaLnI3FUddmKqNzLydCcrI--QvBTQTcVGn_Sv1nTCf6PRff8SUMfWQRt2A0s1ta7D6h7tO3z2mZTgRKTJOzBqjzVpCSXlIaNG9B8BGM53llPy9McOnmrRBuzeHkx8ya2B--dIh4VEXIParFaYhkkz8bCmQspdny2XrgXwMHannBh0YVNmwBG9A"/>
+</div>
+</div>
+
+<form method="POST" action="{% url 'admin_logout' %}">
+    {% csrf_token %}
+<button type="submit" class="flex items-center justify-center w-10 h-10 rounded-xl hover:bg-red-500/10 text-slate-400 hover:text-red-500 transition-colors" title="Logout">
+<span class="material-symbols-outlined">logout</span>
+</button>
+</form>
+</div>
+</div>
+</header>
+<main class="flex-1 overflow-y-auto py-8 px-4 lg:px-0">
+<div class="max-w-[1000px] mx-auto">
+<!-- Breadcrumbs -->
+<div class="flex flex-wrap items-center gap-2 mb-6">
+<a class="text-slate-500 hover:text-primary text-sm font-medium" href="{% url 'dashboard' %}">Dashboard</a>
+<span class="material-symbols-outlined text-slate-600 text-xs">chevron_right</span>
+<a class="text-slate-500 hover:text-primary text-sm font-medium" href="{% url 'celeb_all' %}">Celebrities</a>
+<span class="material-symbols-outlined text-slate-600 text-xs">chevron_right</span>
+<span class="text-primary text-sm font-medium">Add New Celebrity</span>
+</div>
+<!-- Page Heading -->
+<div class="mb-10">
+<h1 class="text-white text-4xl font-black leading-tight tracking-tight mb-2">Create Talent Profile</h1>
+<p class="text-slate-400 text-lg font-normal max-w-2xl">Craft an elegant and detailed profile for new high-end talent entering the StarBooking ecosystem.</p>
+</div>
+<!-- Main Form Card -->
+<form method="POST" enctype="multipart/form-data" class="bg-card-dark rounded-xl border border-border-dark shadow-2xl overflow-hidden mb-20">
+  {% csrf_token %}
+ 
+<!-- Section 1: Media -->
+<div class="p-8 border-b border-border-dark">
+<h2 class="text-white text-2xl font-bold mb-6 flex items-center gap-2">
+<span class="text-primary">1.</span> Profile Imagery
+                    </h2>
+<div class="flex flex-col items-center justify-center py-10">
+<div class="relative group">
+    <label for="id_image" class="cursor-pointer">
+        <div id="image-upload-area" class="size-48 rounded-full border-2 border-dashed border-primary flex flex-col items-center justify-center bg-primary/5 hover:bg-primary/10 transition-all overflow-hidden">
+            {% if form.image.value %}
+                <!-- Show existing image if editing -->
+                <img id="image-preview" class="w-full h-full object-cover" src="{{ form.image.value.url }}" alt="Portrait preview">
+            {% else %}
+                <!-- Show default content if no image -->
+                <div id="default-content">
+                    <span class="material-symbols-outlined   text-primary text-5xl mb-2">add_a_photo</span>
+                </div>
+                <img id="image-preview" class="hidden w-full h-full object-cover" src="" alt="Portrait preview">
+            {% endif %}
+        </div>
+    </label>
+    
+    <button class="absolute bottom-2 right-2 size-10 bg-primary text-black rounded-full flex items-center justify-center hover:scale-110 transition-transform" type="button">
+        {% render_field form.image class+="opacity-0 absolute inset-0 cursor-pointer" id="file-input" %}
+        <span class="pointer-events-none">+</span>
+    </button>
+</div>
+<p class="mt-4 text-slate-500 text-sm italic">Recommended: 1000x1000px high-resolution portrait on a clean background.</p>
+</div>
+</div>
+<!-- Section 2: Personal Details -->
+<div class="p-8 border-b border-border-dark">
+<h2 class="text-white text-2xl font-bold mb-8 flex items-center gap-2">
+<span class="text-primary">2.</span> Personal Details
+                    </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="space-y-2">
+<label class="text-slate-300 text-sm font-semibold uppercase tracking-wider">FullName</label>
+   {% render_field form.name  class="w-full bg-input-dark border-border-dark rounded-lg py-3 px-4 text-white focus:ring-primary focus:border-primary transition-all" placeholder="e.g. Johnathan Smith" type="text" %}
+</div>
+
+<div class="space-y-2">
+<label class="text-slate-300 text-sm font-semibold uppercase tracking-wider">StageName</label>
+   {% render_field form.stagename  class="w-full bg-input-dark border-border-dark rounded-lg py-3 px-4 text-white focus:ring-primary focus:border-primary transition-all" placeholder="e.g. Johnathan Smith" type="text" %}
+</div>
+
+
+
+<div class="md:col-span-2 space-y-4">
+<label class="text-slate-300 text-sm font-semibold uppercase tracking-wider">Primary Talent Categories</label>
+ {% render_field form.category  class="w-full bg-input-dark border-border-dark rounded-lg py-3 px-4 text-white focus:ring-primary focus:border-primary transition-all" placeholder=" Enter Celebrity Category e.g. comedian" type="text" %}
+</div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-5">
+<div class="space-y-2">
+<label class="text-slate-300 text-sm font-semibold uppercase tracking-wider">Instagram</label>
+   {% render_field form.instagram  class="w-full bg-input-dark border-border-dark rounded-lg py-3 px-4 text-white focus:ring-primary focus:border-primary transition-all" placeholder="Enter ntagram link" type="text" %}
+</div>
+
+<div class="space-y-2">
+<label class="text-slate-300 text-sm font-semibold uppercase tracking-wider">Twitter</label>
+   {% render_field form.tweeter  class="w-full bg-input-dark border-border-dark rounded-lg py-3 px-4 text-white focus:ring-primary focus:border-primary transition-all" placeholder="Enter Twitter link" type="text" %}
+</div>
+
+<div class="space-y-2">
+<label class="text-slate-300 text-sm font-semibold uppercase tracking-wider">Facebook</label>
+   {% render_field form.fbk  class="w-full bg-input-dark border-border-dark rounded-lg py-3 px-4 text-white focus:ring-primary focus:border-primary transition-all" placeholder="Enter Facebook link" type="text" %}
+</div>
+
+<div class="space-y-2">
+<label class="text-slate-300 text-sm font-semibold uppercase tracking-wider">Youtube</label>
+   {% render_field form.youtube  class="w-full bg-input-dark border-border-dark rounded-lg py-3 px-4 text-white focus:ring-primary focus:border-primary transition-all" placeholder="Enter Facebook link" type="text" %}
+</div>
+
+
+</div>
+
+</div>
+<!-- Section 3: Professional Bio -->
+<div class="p-8 border-b border-border-dark">
+<h2 class="text-white text-2xl font-bold mb-6 flex items-center gap-2">
+<span class="text-primary">3.</span> Professional Biography
+                    </h2>
+<div class="border border-border-dark rounded-lg overflow-hidden bg-input-dark">
+<div class="flex items-center gap-1 p-2 border-b border-border-dark bg-card-dark/50">
+<button class="p-1 hover:bg-slate-700 rounded text-slate-400" type="button"><span class="material-symbols-outlined text-sm">format_bold</span></button>
+<button class="p-1 hover:bg-slate-700 rounded text-slate-400" type="button"><span class="material-symbols-outlined text-sm">format_italic</span></button>
+<button class="p-1 hover:bg-slate-700 rounded text-slate-400" type="button"><span class="material-symbols-outlined text-sm">format_list_bulleted</span></button>
+<div class="w-px h-4 bg-border-dark mx-1"></div>
+<button class="p-1 hover:bg-slate-700 rounded text-slate-400" type="button"><span class="material-symbols-outlined text-sm">link</span></button>
+</div>
+ {% render_field form.bio  class="w-full bg-transparent border-none text-white p-4 focus:ring-0 resize-none" placeholder="Enter high-end professional biography here. Highlight major awards, notable works, and unique personality traits..." rows="8" %}
+</div>
+</div>
+<!-- Section 4: Booking Information -->
+<div class="p-8 border-b border-border-dark">
+<h2 class="text-white text-2xl font-bold mb-8 flex items-center gap-2">
+<span class="text-primary">4.</span> Booking Terms
+                    </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+<div class="space-y-2">
+<label class="text-slate-300 text-sm font-semibold uppercase tracking-wider">Base Booking Fee</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-primary font-bold">$</span>
+{% render_field form.price_range  class="w-full bg-input-dark border-border-dark rounded-lg py-3 pl-8 pr-4 text-white focus:ring-primary focus:border-primary transition-all" placeholder="0.00" type="number" %}
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-slate-300 text-sm font-semibold uppercase tracking-wider">Currency</label>
+{% render_field form.currency  class="w-full bg-input-dark border-border-dark rounded-lg py-3 px-4 text-white focus:ring-primary focus:border-primary appearance-none" %}
+</div>
+</div>
+
+</div>
+<!-- Section 5: Logistics -->
+<div class="p-8">
+<h2 class="text-white text-2xl font-bold mb-8 flex items-center gap-2">
+<span class="text-primary">5.</span> Travel &amp; Logistics
+                    </h2>
+<div class="grid grid-cols-1 gap-8">
+
+<div class="space-y-2">
+<label class="text-slate-300 text-sm font-semibold uppercase tracking-wider">Specific Travel Preferences</label>
+{% render_field form.extra  class="w-full bg-input-dark border-border-dark rounded-lg py-3 px-4 text-white focus:ring-primary focus:border-primary transition-all resize-none" placeholder="e.g. First Class travel only, private car requirements, dietary restrictions, accommodation standards..." rows="3" %}
+</div>
+</div>
+</div>
+<!-- Form Footer Actions -->
+<div class="bg-card-dark/80 backdrop-blur px-8 py-6 border-t border-border-dark flex flex-col sm:flex-row items-center justify-end gap-4">
+
+<button class="w-full sm:w-auto px-10 py-3 rounded-lg bg-primary text-black font-bold hover:bg-yellow-400 transition-all shadow-lg shadow-primary/20 uppercase tracking-widest text-sm" type="submit">
+                        Publish Celebrity
+                    </button>
+</div>
+</form>
+</div>
+</main>
+
+<!-- Footer Information -->
+<footer class="bg-background-dark py-10 px-4 border-t border-border-dark">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-2 text-slate-500">
+<span class="material-symbols-outlined text-sm">verified_user</span>
+<span class="text-xs uppercase font-bold tracking-tighter">Secure Talent Portal v2.4</span>
+</div>
+<div class="flex gap-8 text-xs text-slate-600 uppercase font-bold tracking-widest">
+<a class="hover:text-primary transition-colors" href="#">Internal Privacy</a>
+<a class="hover:text-primary transition-colors" href="#">Admin Log</a>
+<a class="hover:text-primary transition-colors" href="#">System Status</a>
+</div>
+<p class="text-slate-600 text-xs">© 2024 StarBooking Management Group. All rights reserved.</p>
+</div>
+</footer>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const fileInput = document.getElementById('file-input');
+    const imagePreview = document.getElementById('image-preview');
+    const defaultContent = document.getElementById('default-content');
+    const uploadArea = document.getElementById('image-upload-area');
+    
+    if (fileInput) {
+        fileInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            
+            if (file) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    // Create image preview if it doesn't exist
+                    if (!imagePreview) {
+                        const newImg = document.createElement('img');
+                        newImg.id = 'image-preview';
+                        newImg.className = 'w-full h-full object-cover';
+                        newImg.src = e.target.result;
+                        newImg.alt = 'Portrait preview';
+                        uploadArea.innerHTML = '';
+                        uploadArea.appendChild(newImg);
+                    } else {
+                        // Update existing preview
+                        imagePreview.src = e.target.result;
+                        imagePreview.classList.remove('hidden');
+                        if (defaultContent) {
+                            defaultContent.classList.add('hidden');
+                        }
+                    }
+                    
+                    // Update border style
+                    uploadArea.classList.remove('border-dashed');
+                    uploadArea.classList.add('border-solid');
+                }
+                
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+});
+</script>
+</body></html>

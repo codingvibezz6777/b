@@ -1,0 +1,209 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport"/>
+<title>Booking Success - StarBooking</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,300;0,400;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="icon" type="image/x-icon" href="{% static 'images/icoweb.png' %}">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f2cc0d",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#221f10",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Serif", "serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Smooth mobile menu transitions */
+        .mobile-menu {
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+        }
+        body {
+            overflow: hidden;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-100 overflow-hidden h-screen flex flex-col">
+<!-- Subtle Background Elements for depth -->
+<div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 opacity-20 pointer-events-none">
+<div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 rounded-full blur-[120px]"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-primary/10 rounded-full blur-[100px]"></div>
+</div>
+
+<!-- Header with mobile menu -->
+<header class="sticky top-0 w-full z-50 border-b border-white/10 bg-background-dark/80 backdrop-blur-md px-4 sm:px-6 lg:px-10 py-2 sm:py-3 flex-shrink-0">
+    <div class="max-w-7xl mx-auto">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2 text-white">
+                <span class="material-icons text-primary text-2xl">star</span>
+                <span class="text-lg font-bold tracking-widest uppercase">StarBooking</span>
+            </div>
+
+            <!-- Desktop Navigation (hidden on mobile) -->
+            <nav class="hidden md:flex items-center gap-6">
+                <a class="text-white/80 hover:text-primary text-xs font-medium transition-colors" href="{% url 'index' %}">Home</a>
+                <a class="text-white/80 hover:text-primary text-xs font-medium transition-colors" href="{% url 'celebrity_list' %}">Browse</a>
+                <a class="text-white/80 hover:text-primary text-xs font-medium transition-colors" href="{% url 'aboutus' %}">About Us</a>
+                <a class="text-white/80 hover:text-primary text-xs font-medium transition-colors" href="{% url 'info' %}">How It Works</a>
+                <a class="text-white/80 hover:text-primary text-xs font-medium transition-colors" href="{% url 'contactus' %}">Contact Us</a>
+            </nav>
+
+       
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="md:hidden text-white focus:outline-none" aria-label="Toggle menu">
+                    <span class="material-symbols-outlined text-2xl" id="menuIcon">menu</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobileMenu" class="md:hidden absolute left-0 right-0 top-full mt-0 px-4 sm:px-6 lg:px-10 transition-all duration-300 ease-in-out opacity-0 invisible -translate-y-2 mobile-menu">
+            <div class="bg-[#2a2616]/95 backdrop-blur-md border border-white/10 rounded-lg overflow-hidden shadow-2xl">
+                <div class="flex flex-col space-y-1 p-3">
+                    <a class="text-white/80 hover:text-primary text-xs font-medium transition-colors py-2 px-2 hover:bg-white/5 rounded" href="{% url 'index' %}">Home</a>
+                    <a class="text-white/80 hover:text-primary text-xs font-medium transition-colors py-2 px-2 hover:bg-white/5 rounded" href="{% url 'celebrity_list' %}">Browse</a>
+                    <a class="text-white/80 hover:text-primary text-xs font-medium transition-colors py-2 px-2 hover:bg-white/5 rounded" href="{% url 'aboutus' %}">About Us</a>
+                    <a class="text-white/80 hover:text-primary text-xs font-medium transition-colors py-2 px-2 hover:bg-white/5 rounded" href="{% url 'info' %}">How It Works</a>
+                    <a class="text-white/80 hover:text-primary text-xs font-medium transition-colors py-2 px-2 hover:bg-white/5 rounded" href="{% url 'contactus' %}">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<script>
+// Mobile menu toggle with smooth animation
+document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuIcon = document.getElementById('menuIcon');
+
+    if (mobileMenuBtn && mobileMenu && menuIcon) {
+        mobileMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = mobileMenu.classList.contains('opacity-100');
+            
+            if (!isOpen) {
+                mobileMenu.classList.remove('opacity-0', 'invisible', '-translate-y-2');
+                mobileMenu.classList.add('opacity-100', 'visible', 'translate-y-0');
+                menuIcon.textContent = 'close';
+            } else {
+                mobileMenu.classList.remove('opacity-100', 'visible', 'translate-y-0');
+                mobileMenu.classList.add('opacity-0', 'invisible', '-translate-y-2');
+                menuIcon.textContent = 'menu';
+            }
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!mobileMenuBtn.contains(event.target) && !mobileMenu.contains(event.target)) {
+                if (mobileMenu.classList.contains('opacity-100')) {
+                    mobileMenu.classList.remove('opacity-100', 'visible', 'translate-y-0');
+                    mobileMenu.classList.add('opacity-0', 'invisible', '-translate-y-2');
+                    menuIcon.textContent = 'menu';
+                }
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileMenu.classList.contains('opacity-100')) {
+                mobileMenu.classList.remove('opacity-100', 'visible', 'translate-y-0');
+                mobileMenu.classList.add('opacity-0', 'invisible', '-translate-y-2');
+                menuIcon.textContent = 'menu';
+            }
+        });
+    }
+});
+</script>
+
+<!-- Main Success Card - centered, compact, no scroll -->
+<main class="flex-1 flex items-center justify-center px-3 py-2 relative z-10 overflow-hidden">
+    <div class="w-full max-w-xs sm:max-w-sm md:max-w-md animate-[fadeIn_0.6s_ease-out]">
+        <!-- Success Icon -->
+        <div class="flex justify-center mb-2">
+            <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center shadow-[0_0_20px_rgba(242,204,13,0.3)] relative">
+                <span class="material-icons text-primary text-3xl sm:text-4xl">check</span>
+                <div class="absolute inset-0 rounded-full border border-primary/40 animate-ping"></div>
+            </div>
+        </div>
+
+        <div class="bg-[#2a2616] dark:bg-[#2a2616] border border-[#3d3824] p-4 sm:p-5 md:p-6 rounded-xl shadow-2xl text-center relative overflow-hidden backdrop-blur-sm bg-opacity-95">
+            <div class="absolute top-0 right-0 w-12 h-12 bg-gradient-to-bl from-primary/10 to-transparent rounded-bl-3xl"></div>
+
+            <h1 class="text-lg sm:text-xl md:text-2xl font-bold mb-1 text-white">Booking Received</h1>
+            <p class="text-white/60 mb-3 text-xs sm:text-sm font-light">
+                Your request is secure. Our team will contact you soon.
+            </p>
+
+            <!-- Booking Details Summary (compact) -->
+            <div class="bg-black/30 rounded-lg p-3 mb-3 border border-white/5 text-left">
+                <div class="flex items-center gap-2 mb-2 pb-2 border-b border-white/10">
+                    <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg overflow-hidden flex-shrink-0 border border-white/10">
+                        <img alt="Celebrity" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAupDSuUvc_akdeVWm5WVN9XyPJRZ3A1ayzWwWqry2pZggQqyPDWrB_U1ccMkAShVvZujc987Y1KUbTgqKV6HzE64uqZWXQ2PIyY1tFKQ_TEsXq3XB1UE9kfKuXKERkEuCX6JoZpvfTfLCPRpjeiG_SaN5rmCJLGAy2hmBv76xOSCvP_n4m1jj6FWaZ0pgkKEfJ9WmJCFXeC8SR8WvsDjf7TnwvvdoLMFYMnwnyMnDw1LkHc5Fxc65z8Cqffram2A8IAcknOlFiPS8"/>
+                    </div>
+                    <div class="min-w-0">
+                        <h3 class="text-sm font-semibold text-white truncate">{{ booking.celebrity.name }}</h3>
+                        <p class="text-primary text-[10px] uppercase tracking-wide truncate">{{ booking.event_type }}</p>
+                    </div>
+                </div>
+
+                <div class="space-y-1.5 text-xs">
+                    <div class="flex justify-between items-center gap-2">
+                        <span class="text-white/50 text-[10px]">Email</span>
+                        <span class="text-white font-medium text-[10px] truncate max-w-[150px]">{{ booking.email }}</span>
+                    </div>
+                    <div class="flex justify-between items-center gap-2">
+                        <span class="text-white/50 text-[10px]">Budget</span>
+                        <span class="text-white font-medium text-[10px]">{{ booking.budget }}</span>
+                    </div>
+                    <div class="flex justify-between items-center gap-2">
+                        <span class="text-white/50 text-[10px]">Location</span>
+                        <span class="text-white font-medium text-[10px]">New York, NY</span>
+                    </div>
+                    <div class="flex justify-between items-center gap-2">
+                        <span class="text-white/50 text-[10px]">Event Date</span>
+                        <span class="font-mono text-primary/80 text-[10px]">{{ booking.event_date }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Status Indicator -->
+            <div class="inline-flex items-center gap-1.5 px-2 py-1 rounded-full border border-primary/30 bg-primary/10 mb-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+                <span class="text-primary text-[9px] font-medium uppercase tracking-wider">Pending Review</span>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col gap-2">
+                <a href="{% url 'celebrity_list' %}" class="w-full bg-primary text-background-dark font-bold text-xs sm:text-sm py-2 px-3 rounded-lg hover:bg-[#d9b70b] transition-colors shadow-[0_2px_8px_0_rgba(242,204,13,0.39)] flex justify-center items-center gap-1 group">
+                    <span>Back to Celebrity List</span>
+                    <span class="material-icons text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Footer assist text -->
+        <p class="text-center text-white/30 text-[8px] mt-2">
+            Need help? <a class="text-white/50 underline hover:text-primary" href="#">Contact Support</a>
+        </p>
+    </div>
+</main>
+</body>
+</html>

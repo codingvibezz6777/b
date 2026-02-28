@@ -1,0 +1,185 @@
+{% load widget_tweaks % }
+{% load static %}
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Delete Celebrity Confirmation - StarBooking Admin</title>
+<link rel="icon" type="image/x-icon" href="{% static 'images/icoweb.png' %}">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f2cc0d",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#221f10",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .modal-backdrop {
+            background-color: rgba(18, 16, 8, 0.85);
+            backdrop-filter: blur(8px);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-white antialiased">
+<!-- Dashboard Shell (Blurred Background Content) -->
+<div class="relative flex h-screen w-full flex-col overflow-hidden">
+<!-- Side Navigation -->
+<aside class="fixed left-0 top-0 h-full w-64 bg-[#232010] border-r border-[#494222] hidden lg:flex flex-col p-6">
+<div class="flex items-center gap-3 mb-10 px-2">
+<div class="bg-primary rounded-full size-10 flex items-center justify-center text-background-dark">
+<span class="material-symbols-outlined font-bold">star</span>
+</div>
+<div>
+<h1 class="text-white text-base font-bold leading-tight">StarBooking</h1>
+<p class="text-primary text-xs font-medium uppercase tracking-wider">Luxury Admin</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<div class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/70">
+<span class="material-symbols-outlined">dashboard</span>
+<p class="text-sm font-medium">Dashboard</p>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 rounded-xl bg-[#494222] text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">stars</span>
+<p class="text-sm font-medium">Celebrities</p>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/70">
+<span class="material-symbols-outlined">calendar_month</span>
+<p class="text-sm font-medium">Bookings</p>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/70">
+<span class="material-symbols-outlined">analytics</span>
+<p class="text-sm font-medium">Analytics</p>
+</div>
+<div class="mt-auto flex items-center gap-3 px-4 py-3 rounded-xl text-white/70">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-sm font-medium">Settings</p>
+</div>
+</nav>
+</aside>
+<!-- Top Navigation -->
+<header class="lg:ml-64 flex items-center justify-between border-b border-[#494222] bg-[#232010] px-8 py-4">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#cbc190]">search</span>
+<input class="w-full bg-[#342f18] border-none rounded-xl pl-10 pr-4 py-2 text-sm text-white focus:ring-1 focus:ring-primary placeholder:text-[#cbc190]/50" placeholder="Search celebrities, bookings..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-[#342f18] p-2 rounded-xl text-[#cbc190] hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="h-10 w-10 rounded-full bg-cover bg-center border border-primary/30" data-alt="User profile avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCHy-xnekotoL5Ua-wlD983yQRYtSA0HuUShSlZPih4rIJSDW7I3CIwZ7Lp0z_FqRg_4TsgkK2fvhFi_3UVS62vNjM-ApZb_xuNln_w1kViRB_UZl3tyNPYweIIIHBrBMTFOl_WxrAhIjlYrWSKpWUrsSqXOpc75tUo9MVLBM1qyg3WHWgG4TvEJ9S4OL8K3x_cLUPECuvT8tsM4FkBHk_tHV8revUbVhNbMQJ59i0BII55Wj3sVg21ui-uImRReNq-ZmPaTxBwCNE')"></div>
+</div>
+</header>
+<!-- Main Content Area (Visual Context) -->
+<main class="lg:ml-64 p-8 overflow-y-auto">
+<div class="flex items-center justify-between mb-8">
+<div>
+<h2 class="text-2xl font-bold">Celebrity Profiles</h2>
+<p class="text-[#cbc190]">Manage your elite talent roster</p>
+</div>
+<button class="bg-primary text-background-dark px-6 py-2.5 rounded-xl font-bold text-sm hover:brightness-110 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined">add</span> Add New Talent
+                </button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Example Card 1 -->
+<div class="bg-[#2d2914] rounded-xl border border-[#494222] p-4 opacity-50">
+<div class="aspect-square rounded-lg mb-4 bg-cover bg-center" data-alt="Celebrity headshot preview portrait" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAvik3pe8jB5yQcL0FDvgjT1gKraWt_1z7Rp_h8Lz7-eFRdG4CrwdeMwtWslLcL60hBJXlXtdx6kwkwn8VgxBMF72m2j9ml2sbajIb_0AqpK03jlL0pjcp-NzmwyOEtjgOgHVqMwQ7v2_8KDZqA6c0ezl9iwpPJf0CDbkXtSQfwzLZGwqI4axBvj4RTzLurS0sStY1T48GGFS5dXoQkK3rGcwH3qgN0TBm8CrIikZwYkLohcfpDFFo8mMcHnzgKBJQmk9S37M_s6kI')"></div>
+<h3 class="font-bold text-lg">Margot Robbie</h3>
+<p class="text-sm text-primary/80">Category: Film &amp; Television</p>
+</div>
+<!-- Example Card 2 -->
+<div class="bg-[#2d2914] rounded-xl border border-[#494222] p-4 relative ring-2 ring-primary/50">
+<div class="aspect-square rounded-lg mb-4 bg-cover bg-center" data-alt="Leonardo DiCaprio professional headshot" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB6mXBfiAm8fMKo4lVP8xAm5hVOhGrAnBizcyKyBlOMyhAZ8AnzpWih29lQSP4gStEut-7kcGp-DfK96DpYC1PiZYtjijkElelxz-He-X8ujOwAYZWYX_Nnx8Xe6fIn2XaluUlwoxc6lsM4ST8jXS8EHXO0-6nJq4wQKuG1m4yhLCTHFhyHZ4YgB8b_tP05ZnjhYDN3GWlO0UHHltXVyo3aDx6-UaarPNtYbkQ437n04utZIkDaTiwQC5BNO994MnWPHngUKsEgh6U')"></div>
+<h3 class="font-bold text-lg">Leonardo DiCaprio</h3>
+<p class="text-sm text-primary/80">Category: Film &amp; Television</p>
+<div class="absolute top-2 right-2 flex gap-1">
+<button class="bg-red-500/20 text-red-500 p-2 rounded-lg"><span class="material-symbols-outlined text-sm">delete</span></button>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Delete Confirmation Modal Overlay -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop">
+<!-- Modal Card -->
+<div class="w-full max-w-[540px] bg-[#2d2914] border border-[#494222] rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden">
+<!-- Modal Header / Title -->
+<div class="p-8 pb-4">
+<div class="flex items-center gap-3 mb-6">
+<div class="size-12 rounded-xl bg-red-500/10 flex items-center justify-center text-red-500 border border-red-500/20">
+<span class="material-symbols-outlined text-3xl">warning</span>
+</div>
+<div>
+<h2 class="text-2xl font-extrabold tracking-tight text-white">Delete Profile</h2>
+<p class="text-[#cbc190] text-sm font-medium">Internal Admin Action Required</p>
+</div>
+</div>
+<div class="flex flex-col items-center justify-center py-6 px-4 bg-[#342f18] rounded-xl border border-[#494222] mb-6">
+<div class="size-24 rounded-full border-4 border-[#494222] overflow-hidden mb-4 shadow-xl">
+<div class="w-full h-full bg-cover bg-center" data-alt="Confirmation headshot for Leonardo DiCaprio" style="background-image: url('{{ celebrity.image.url }}')"></div>
+</div>
+<p class="text-[#cbc190] text-sm uppercase tracking-[0.2em] font-semibold mb-1">Confirm Identity</p>
+<h3 class="text-xl font-bold text-white">{{ celebrity.name }}</h3>
+</div>
+<div class="space-y-4">
+<p class="text-[#cbc190] text-base leading-relaxed text-center px-4">
+                        Are you sure you want to delete this celebrity? This action is <span class="text-red-400 font-bold underline underline-offset-4">permanent</span> and will remove all booking data from the public platform.
+                    </p>
+
+</div>
+</div>
+<!-- Modal Footer / Actions -->
+<div class="p-8 pt-4 flex flex-col gap-3">
+<form method="POST"
+      action="{% url 'delete_celebrity' celebrity.id %}">
+
+    {% csrf_token %}
+
+    <button
+        type="submit"
+        class="w-full h-12 mb-3 flex items-center justify-center gap-2 rounded-xl
+               bg-gradient-to-r from-red-600 to-red-700
+               hover:from-red-500 hover:to-red-600
+               text-white font-bold text-base transition-all
+               shadow-lg shadow-red-900/20 active:scale-[0.98]"
+    >
+        <span class="material-symbols-outlined text-xl">delete_forever</span>
+        Permanently Delete
+    </button>
+
+    <a
+        href="{% url 'celeb_all' %}"
+        class="w-full h-12 flex items-center justify-center rounded-xl
+               bg-transparent border border-[#494222]
+               text-[#cbc190] hover:bg-[#342f18]
+               hover:text-white font-bold text-base transition-all"
+    >
+        Cancel and Keep
+    </a>
+</form>
+
+</div>
+</div>
+</div>
+</body></html>
