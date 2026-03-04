@@ -153,3 +153,12 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+import os
+from django.contrib.auth import get_user_model
+
+if os.getenv("CREATE_SUPERUSER") == "True":
+    User = get_user_model()
+    if not User.objects.filter(username="admin").exists():
+        User.objects.create_superuser("admin", "starbooking@email.com", "admin123")
