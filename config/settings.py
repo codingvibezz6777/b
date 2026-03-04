@@ -25,7 +25,10 @@ SECRET_KEY = 'django-insecure-%rler4vu)$p@i2o4jq3vbo1ntt$w!8(qhi&nrg^(ka^89qh86#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['b-production-c984.up.railway.app',
+                 '.railway.app',
+                 'localhost',
+                 ]
 
 
 # Application definition
@@ -70,6 +73,10 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://b-production-c984.up.railway.app"
+]
 
 
 # Database
