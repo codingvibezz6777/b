@@ -1,7 +1,7 @@
 {
   "name": "Starbooking Admin Dashboard",
   "short_name": "Admin",
-  "start_url": "/",
+  "start_url": "/admin_login/",
   "display": "standalone",
   "background_color": "#1A180D",
   "theme_color": "#0f172a",
