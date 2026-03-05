@@ -2,6 +2,7 @@
   "name": "Starbooking Admin Dashboard",
   "short_name": "Admin",
   "start_url": "/admin_login/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#1A180D",
   "theme_color": "#0f172a",
