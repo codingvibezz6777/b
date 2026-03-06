@@ -140,6 +140,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
+
 import os
 
 

@@ -16,7 +16,7 @@ def send_booking_emails(sender, instance, created, **kwargs):
     try:
         # ---------- Admin Notification ----------
         resend.Emails.send({
-            "from": "Booking App <starbookingofficial@gmail.com>",
+            "from": "Booking App <admin@star-bookings.com>",
             "to": [settings.ADMIN_EMAIL],
             "subject": f"New Booking for {instance.celebrity.name}",
             "html": f"""
@@ -28,7 +28,7 @@ def send_booking_emails(sender, instance, created, **kwargs):
 
         # ---------- User Confirmation ----------
         resend.Emails.send({
-            "from": "Booking App <starbookingofficial@gmail.com>",
+            "from": "Booking App <admin@star-bookings.com>",
             "to": [instance.email],
             "subject": f"Booking Confirmation - {instance.celebrity.name}",
             "html": f"""
