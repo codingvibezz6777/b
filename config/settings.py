@@ -28,6 +28,8 @@ DEBUG = True
 ALLOWED_HOSTS = ['b-production-c984.up.railway.app',
                  '.railway.app',
                  'localhost',
+                 'www.star-bookings.com',
+                 'star-bookings.com',
                  ]
 
 
