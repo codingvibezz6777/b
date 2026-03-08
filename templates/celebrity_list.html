@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-80"></div>
 <div class="absolute top-4 right-4 bg-background-dark/80 backdrop-blur-md px-2 py-1 rounded flex items-center gap-1 border border-border-dark">
 <span class="material-symbols-outlined text-primary text-xs fill-[1]">star</span>
-<span class="text-[10px] font-bold">4.9</span>
+<span class="text-[10px] font-bold">5.0</span>
 </div>
 <div class="overlay-btn absolute inset-0 flex items-center justify-center opacity-0 transition-all duration-300 translate-y-4">
 <a href="{% url 'celebrity_detail' celeb.slug %}" class="px-6 py-2.5 bg-primary text-background-dark font-black text-xs rounded-full shadow-2xl hover:scale-105 transition-transform">VIEW PROFILE</a>
@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <h3 class="text-lg font-bold">{{ celeb.name }}</h3>
 <p class="text-xs text-slate-400 font-medium">{{ celeb.category }}</p>
 </div>
-<p class="text-sm font-black text-primary">$1,200</p>
+<p class="text-sm font-black text-primary">{{ celeb.price_range }}</p>
 </div>
 <div class="mt-4 flex items-center gap-4">
 <div class="flex items-center gap-1.5">

@@ -245,9 +245,9 @@ document.addEventListener('keydown', (e) => {
 <span class="text-[10px] sm:text-xs font-bold">4.9</span>
 </div>
 <h3 class="text-lg sm:text-xl font-bold text-white leading-tight"><a href="../Project1/scarletjohanson.html">{{ celeb.name }}</a></h3>
-<p class="text-primary/80 text-[10px] sm:text-xs font-semibold uppercase tracking-wider">Hollywood Actress</p>
+<p class="text-primary/80 text-[10px] sm:text-xs font-semibold uppercase tracking-wider">{{ celeb.Category }}</p>
 <div class="pt-2 sm:pt-4 flex items-center justify-between">
-<span class="text-white/60 text-[10px] sm:text-xs italic">Starts at $15,000</span>
+<span class="text-white/60 text-[10px] sm:text-xs italic">Starts at ${{ celeb.price_range }}</span>
 <button class="bg-white/10 hover:bg-primary hover:text-background-dark p-1.5 sm:p-2 rounded-lg transition-colors">
 <a href="{% url 'celebrity_detail' celeb.slug %}" class="material-symbols-outlined text-xs sm:text-sm">Book</a>
 </button>

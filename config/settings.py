@@ -29,7 +29,7 @@ ALLOWED_HOSTS = ['www.star-bookings.com',
                  'star-bookings.com',
                  '.up.railway.app',
                  'b-production-c984.up.railway.app',
-                 'localhost',
+                 '127.0.0.1',
                  ]
 
 
@@ -77,7 +77,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://b-production-c984.up.railway.app"
+    "https://b-production-c984.up.railway.app",
+    "https://www.star-bookings.com",
 ]
 
 
