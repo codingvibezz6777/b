@@ -29,7 +29,7 @@ def send_booking_emails(sender, instance, created, **kwargs):
         })
 
         # ---------- User Confirmation ----------
-        user_html = render_to_string("booking_notification_user.html", {
+        user_html = render_to_string("booking_cornfirmation_user.html", {
             "booking": instance,
         })
         

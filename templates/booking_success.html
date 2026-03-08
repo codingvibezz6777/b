@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="bg-black/30 rounded-lg p-3 mb-3 border border-white/5 text-left">
                 <div class="flex items-center gap-2 mb-2 pb-2 border-b border-white/10">
                     <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg overflow-hidden flex-shrink-0 border border-white/10">
-                        <img alt="Celebrity" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAupDSuUvc_akdeVWm5WVN9XyPJRZ3A1ayzWwWqry2pZggQqyPDWrB_U1ccMkAShVvZujc987Y1KUbTgqKV6HzE64uqZWXQ2PIyY1tFKQ_TEsXq3XB1UE9kfKuXKERkEuCX6JoZpvfTfLCPRpjeiG_SaN5rmCJLGAy2hmBv76xOSCvP_n4m1jj6FWaZ0pgkKEfJ9WmJCFXeC8SR8WvsDjf7TnwvvdoLMFYMnwnyMnDw1LkHc5Fxc65z8Cqffram2A8IAcknOlFiPS8"/>
+                        <img alt="Celebrity" class="w-full h-full object-cover" src=" {{ booking.celebrity.image.url }}"/>
                     </div>
                     <div class="min-w-0">
                         <h3 class="text-sm font-semibold text-white truncate">{{ booking.celebrity.name }}</h3>
@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                     <div class="flex justify-between items-center gap-2">
                         <span class="text-white/50 text-[10px]">Location</span>
-                        <span class="text-white font-medium text-[10px]">New York, NY</span>
+                        <span class="text-white font-medium text-[10px]">{{ booking.event_location }}</span>
                     </div>
                     <div class="flex justify-between items-center gap-2">
                         <span class="text-white/50 text-[10px]">Event Date</span>
