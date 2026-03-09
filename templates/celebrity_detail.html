@@ -342,7 +342,7 @@
                                 <h4 class="text-white font-bold text-lg mb-1 group-hover:text-primary transition-colors">{{ similar_celeb.name }}</h4>
                                 <p class="text-slate-400 text-xs uppercase tracking-wider font-semibold mb-3">{{ similar_celeb.category }}</p>
                                 <div class="flex items-center justify-between">
-                                    <span class="text-slate-300 text-sm font-medium">$ {{ similar_celeb.price_range }}</span>
+                                    <span class="text-slate-300 text-sm font-medium"><span>{{ similar_celeb.currency }} </span>{{ similar_celeb.price_range }}</span>
                                     <a href="{% url 'celebrity_detail' similar_celeb.slug %}" class="bg-white/10 p-2 rounded-full text-white hover:bg-primary hover:text-black transition-colors">
                                         <span class="material-symbols-outlined text-sm">arrow_forward</span>
                                     </a>
