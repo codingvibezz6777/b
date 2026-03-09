@@ -44,44 +44,100 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #FFD700; 
         }
+        /* Prevent horizontal scrolling */
+        body {
+            overflow-x: hidden;
+            width: 100%;
+        }
     </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display min-h-screen flex flex-col antialiased selection:bg-primary/30">
-<header class="h-20 bg-background-dark dark:bg-surface-dark border-b border-slate-200 dark:border-white/5 sticky top-0 z-50">
-<div class="max-w-7xl mx-auto px-8 h-full flex items-center justify-between">
-<div class="flex items-center gap-3 text-background-dark dark:text-white cursor-pointer hover:opacity-80 transition-opacity">
-<div class="size-6 text-primary">
-<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-<path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z"></path>
-</svg>
-</div>
-<h2 class="text-xl font-bold leading-tight tracking-[-0.015em]">StarBooking</h2>
-</div>
-<nav class="hidden md:flex items-center gap-8">
-<a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm font-semibold transition-colors" href="{% url 'dashboard' %}">Dashboard</a>
-<a class="nav-link-active text-sm font-bold transition-colors" href="{% url 'celeb_all' %}">Celebrities</a>
-<a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm font-semibold transition-colors" href="{% url 'bookings' %}">Bookings</a>
-</nav>
-<div class="flex items-center gap-4">
-<div class="flex items-center gap-3 pr-4 border-r border-slate-200 dark:border-white/10">
-<a href="{% url 'user_profile' %}"><div class="text-right hidden sm:block">
-<p class="text-xs font-bold dark:text-white leading-none">Admin User</p>
-<p class="text-[10px] text-slate-500 mt-1">Super Admin</p>
-</div></a>
-<div class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center overflow-hidden">
-<img alt="Admin Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcT307JC4VzWBaHYUCcEP7OSz7jQx56Fz3kWUMo_IXqUH3lY6Gv6klHiJSbBXCPWGOsLGhDhbi0384S0K6ILkQpWaLnI3FUddmKqNzLydCcrI--QvBTQTcVGn_Sv1nTCf6PRff8SUMfWQRt2A0s1ta7D6h7tO3z2mZTgRKTJOzBqjzVpCSXlIaNG9B8BGM53llPy9McOnmrRBuzeHkx8ya2B--dIh4VEXIParFaYhkkz8bCmQspdny2XrgXwMHannBh0YVNmwBG9A"/>
-</div>
-</div>
 
-<form method="POST" action="{% url 'admin_logout' %}">
-    {% csrf_token %}
-<button type="submit" class="flex items-center justify-center w-10 h-10 rounded-xl hover:bg-red-500/10 text-slate-400 hover:text-red-500 transition-colors" title="Logout">
-<span class="material-symbols-outlined">logout</span>
-</button>
-</form>
-</div>
-</div>
+<!-- ========== UPDATED HEADER WITH MOBILE DROPDOWN ========== -->
+<header class="h-20 bg-background-dark dark:bg-surface-dark border-b border-slate-200 dark:border-white/5 sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 md:px-8 h-full flex items-center justify-between relative">   <!-- added relative for dropdown positioning -->
+    <!-- Logo -->
+    <div class="flex items-center gap-3 text-background-dark dark:text-white cursor-pointer hover:opacity-80 transition-opacity">
+      <div class="size-6 text-primary">
+        <svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z"></path>
+        </svg>
+      </div>
+      <h2 class="text-xl font-bold leading-tight tracking-[-0.015em]">StarBooking</h2>
+    </div>
+
+    <!-- Desktop Navigation (hidden on mobile) -->
+    <nav class="hidden md:flex items-center gap-8">
+      <a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm font-semibold transition-colors" href="{% url 'dashboard' %}">Dashboard</a>
+      <a class="nav-link-active text-sm font-bold transition-colors" href="{% url 'celeb_all' %}">Celebrities</a>
+      <a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm font-semibold transition-colors" href="{% url 'bookings' %}">Bookings</a>
+    </nav>
+
+    <!-- Desktop User Info & Logout (hidden on mobile) -->
+    <div class="hidden md:flex items-center gap-4">
+      <div class="flex items-center gap-3 pr-4 border-r border-slate-200 dark:border-white/10">
+        <a href="{% url 'user_profile' %}">
+          <div class="text-right hidden sm:block">
+            <p class="text-xs font-bold dark:text-white leading-none">Admin User</p>
+            <p class="text-[10px] text-slate-500 mt-1">Super Admin</p>
+          </div>
+        </a>
+        <div class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center overflow-hidden">
+          <img alt="Admin Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcT307JC4VzWBaHYUCcEP7OSz7jQx56Fz3kWUMo_IXqUH3lY6Gv6klHiJSbBXCPWGOsLGhDhbi0384S0K6ILkQpWaLnI3FUddmKqNzLydCcrI--QvBTQTcVGn_Sv1nTCf6PRff8SUMfWQRt2A0s1ta7D6h7tO3z2mZTgRKTJOzBqjzVpCSXlIaNG9B8BGM53llPy9McOnmrRBuzeHkx8ya2B--dIh4VEXIParFaYhkkz8bCmQspdny2XrgXwMHannBh0YVNmwBG9A"/>
+        </div>
+      </div>
+
+      <form method="POST" action="{% url 'admin_logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="flex items-center justify-center w-10 h-10 rounded-xl hover:bg-red-500/10 text-slate-400 hover:text-red-500 transition-colors" title="Logout">
+          <span class="material-symbols-outlined">logout</span>
+        </button>
+      </form>
+    </div>
+
+    <!-- Mobile Menu Button (visible only on mobile) -->
+    <button id="mobileMenuBtn" class="md:hidden text-white focus:outline-none" aria-label="Toggle menu">
+      <span class="material-symbols-outlined text-3xl" id="menuIcon">menu</span>
+    </button>
+
+    <!-- Mobile Dropdown Menu (Absolute) -->
+    <div id="mobileMenu" class="md:hidden absolute left-0 right-0 top-full mt-0 transition-all duration-300 ease-in-out opacity-0 invisible -translate-y-2 z-50">
+      <div class="bg-card-dark/95 backdrop-blur-md rounded-lg border border-border-dark shadow-xl overflow-hidden">
+        <div class="flex flex-col space-y-1 p-4">
+          <!-- Navigation Links -->
+          <a class="text-slate-200 hover:text-primary text-base font-medium py-3 px-2 hover:bg-white/5 rounded" href="{% url 'dashboard' %}">Dashboard</a>
+          <a class="text-primary text-base font-medium underline underline-offset-4 py-3 px-2 hover:bg-white/5 rounded" href="{% url 'celeb_all' %}">Celebrities</a>
+          <a class="text-slate-200 hover:text-primary text-base font-medium py-3 px-2 hover:bg-white/5 rounded" href="{% url 'bookings' %}">Bookings</a>
+
+          <!-- Separator -->
+          <div class="border-t border-white/10 my-2"></div>
+
+          <!-- User Info (clickable row) -->
+          <a href="{% url 'user_profile' %}" class="flex items-center gap-3 px-2 py-3 rounded-lg hover:bg-white/5 transition-colors">
+            <div class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center overflow-hidden">
+              <img alt="Admin Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcT307JC4VzWBaHYUCcEP7OSz7jQx56Fz3kWUMo_IXqUH3lY6Gv6klHiJSbBXCPWGOsLGhDhbi0384S0K6ILkQpWaLnI3FUddmKqNzLydCcrI--QvBTQTcVGn_Sv1nTCf6PRff8SUMfWQRt2A0s1ta7D6h7tO3z2mZTgRKTJOzBqjzVpCSXlIaNG9B8BGM53llPy9McOnmrRBuzeHkx8ya2B--dIh4VEXIParFaYhkkz8bCmQspdny2XrgXwMHannBh0YVNmwBG9A"/>
+            </div>
+            <div>
+              <p class="text-sm font-bold dark:text-white">Admin User</p>
+              <p class="text-xs text-slate-400">Super Admin</p>
+            </div>
+          </a>
+
+          <!-- Logout form inside dropdown -->
+          <form method="POST" action="{% url 'admin_logout' %}" class="px-2 py-2">
+            {% csrf_token %}
+            <button type="submit" class="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-red-500/10 text-red-500 hover:bg-red-500/20 transition-colors">
+              <span class="material-symbols-outlined text-base">logout</span>
+              <span class="text-sm font-semibold">Logout</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </header>
+<!-- ========== END UPDATED HEADER ========== -->
+
 <main class="flex-1 flex flex-col p-6 lg:p-10 max-w-[1440px] mx-auto w-full gap-8">
 <a class="flex items-center gap-2 group w-fit" href="{% url 'bookings' %}">
 <span class="material-symbols-outlined text-primary group-hover:-translate-x-1 transition-transform">arrow_back</span>
@@ -173,13 +229,11 @@
 <div class="flex flex-col gap-1">
 <span class="text-xs text-slate-500 dark:text-primary uppercase tracking-wider font-bold">Nearest Airport</span>
 <p class="text-base font-bold text-slate-900 dark:text-white"> {{ booking.airport }}</p>
-
 </div>
 
 <div class="flex flex-col gap-1">
 <span class="text-xs text-slate-500 dark:text-primary uppercase tracking-wider font-bold">DURATION</span>
 <p class="text-base font-bold text-slate-900 dark:text-white"> {{ booking.airport }}</p>
-
 </div>
 </div>
 
@@ -247,5 +301,64 @@
 </div>
 </div>
 
+<!-- Mobile menu toggle script -->
+<script>
+// Mobile menu toggle with smooth animation
+document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuIcon = document.getElementById('menuIcon');
+
+    if (mobileMenuBtn && mobileMenu && menuIcon) {
+        mobileMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = mobileMenu.classList.contains('opacity-100');
+            
+            if (!isOpen) {
+                // Open menu
+                mobileMenu.classList.remove('opacity-0', 'invisible', '-translate-y-2');
+                mobileMenu.classList.add('opacity-100', 'visible', 'translate-y-0');
+                menuIcon.textContent = 'close';
+            } else {
+                // Close menu
+                mobileMenu.classList.remove('opacity-100', 'visible', 'translate-y-0');
+                mobileMenu.classList.add('opacity-0', 'invisible', '-translate-y-2');
+                menuIcon.textContent = 'menu';
+            }
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!mobileMenuBtn.contains(event.target) && !mobileMenu.contains(event.target)) {
+                if (mobileMenu.classList.contains('opacity-100')) {
+                    mobileMenu.classList.remove('opacity-100', 'visible', 'translate-y-0');
+                    mobileMenu.classList.add('opacity-0', 'invisible', '-translate-y-2');
+                    menuIcon.textContent = 'menu';
+                }
+            }
+        });
+
+        // Close menu on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileMenu.classList.contains('opacity-100')) {
+                mobileMenu.classList.remove('opacity-100', 'visible', 'translate-y-0');
+                mobileMenu.classList.add('opacity-0', 'invisible', '-translate-y-2');
+                menuIcon.textContent = 'menu';
+            }
+        });
+
+        // Hide dropdown on window resize above md breakpoint (768px)
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 768) {
+                if (mobileMenu.classList.contains('opacity-100')) {
+                    mobileMenu.classList.remove('opacity-100', 'visible', 'translate-y-0');
+                    mobileMenu.classList.add('opacity-0', 'invisible', '-translate-y-2');
+                    menuIcon.textContent = 'menu';
+                }
+            }
+        });
+    }
+});
+</script>
 </body>
 </html>

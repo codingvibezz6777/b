@@ -242,15 +242,15 @@ document.addEventListener('keydown', (e) => {
 <div class="absolute bottom-0 left-0 right-0 p-4 sm:p-6 space-y-1 sm:space-y-2">
 <div class="flex items-center gap-1 text-primary">
 <span class="material-symbols-outlined text-xs sm:text-sm fill-1">star</span>
-<span class="text-[10px] sm:text-xs font-bold">4.9</span>
+<span class="text-[10px] sm:text-xs font-bold">5.0</span>
 </div>
 <h3 class="text-lg sm:text-xl font-bold text-white leading-tight"><a href="../Project1/scarletjohanson.html">{{ celeb.name }}</a></h3>
 <p class="text-primary/80 text-[10px] sm:text-xs font-semibold uppercase tracking-wider">{{ celeb.Category }}</p>
 <div class="pt-2 sm:pt-4 flex items-center justify-between">
-<span class="text-white/60 text-[10px] sm:text-xs italic">Starts at ${{ celeb.price_range }}</span>
-<button class="bg-white/10 hover:bg-primary hover:text-background-dark p-1.5 sm:p-2 rounded-lg transition-colors">
+<span class="text-white/60 text-[10px] sm:text-xs italic">Starts at <span>{{ celeb.currency }}</span>{{ celeb.price_range }}</span>
+<a href="{% url 'celebrity_detail' celeb.slug %}" class="material-symbols-outlined text-xs sm:text-sm"><button class="bg-white/10 hover:bg-primary hover:text-background-dark p-1.5 sm:p-2 rounded-lg transition-colors">
 <a href="{% url 'celebrity_detail' celeb.slug %}" class="material-symbols-outlined text-xs sm:text-sm">Book</a>
-</button>
+</button></a>
 </div>
 </div>
 </div>
@@ -415,5 +415,19 @@ searchInput.dispatchEvent(new Event('input'));
     });
   });
 </script>
+
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/69ae23c314565f1c35628865/1jj83nd26';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
 
 </body></html>

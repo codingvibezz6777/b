@@ -4,7 +4,7 @@
 <html class="dark" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Browse Celebrities | EliteStars</title>
+<title>Browse Celebrities | Starbookings</title>
 <link rel="icon" type="image/x-icon" href="{% static 'images/icoweb.png' %}">
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -55,27 +55,47 @@
 <body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white antialiased transition-colors duration-300">
 <!-- Top Navigation Bar -->
 <header class="sticky top-0 z-50 w-full glass-effect border-b border-border-dark px-6 md:px-12 py-3">
-<div class="max-w-[1440px] mx-auto">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-3">
-<div class="size-8 text-primary">
-<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-<path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path>
-</svg>
-</div>
-<h2 class="text-xl font-black tracking-tighter uppercase italic">StarBooking</h2>
-</div>
+  <div class="max-w-[1440px] mx-auto relative">   <!-- added relative for dropdown positioning -->
+    <div class="flex items-center justify-between">
+      <!-- Logo -->
+      <div class="flex items-center gap-3">
+        <div class="size-8 text-primary">
+          <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path>
+          </svg>
+        </div>
+        <h2 class="text-xl font-black tracking-tighter uppercase italic">StarBooking</h2>
+      </div>
 
-<!-- Desktop Navigation -->
-<nav class="hidden md:flex items-center gap-10 pe-5">
-<a class="text-sm font-semibold hover:text-primary transition-colors" href="{% url 'index' %}">Home</a>
-<a class="text-primary text-sm font-medium underline underline-offset-4" href="{% url 'celebrity_list' %}">Browse</a>
-<a class="text-sm font-semibold hover:text-primary transition-colors" href="{% url 'aboutus' %}">About Us</a>
-<a class="text-sm font-semibold hover:text-primary transition-colors" href="{% url 'info' %}">How It Works</a>
-<a class="text-sm font-semibold hover:text-primary transition-colors" href="{% url 'contactus' %}">Contact Us</a>
-</nav>
+      <!-- Desktop Navigation (hidden on mobile) -->
+      <nav class="hidden md:flex items-center gap-10 pe-5">
+        <a class="text-sm font-semibold hover:text-primary transition-colors" href="{% url 'index' %}">Home</a>
+        <a class="text-primary text-sm font-medium underline underline-offset-4" href="{% url 'celebrity_list' %}">Browse</a>
+        <a class="text-sm font-semibold hover:text-primary transition-colors" href="{% url 'aboutus' %}">About Us</a>
+        <a class="text-sm font-semibold hover:text-primary transition-colors" href="{% url 'info' %}">How It Works</a>
+        <a class="text-sm font-semibold hover:text-primary transition-colors" href="{% url 'contactus' %}">Contact Us</a>
+      </nav>
+
+      <!-- Mobile Menu Button (visible only on mobile) -->
+      <button id="mobileMenuBtn" class="md:hidden text-white focus:outline-none" aria-label="Toggle menu">
+        <span class="material-symbols-outlined text-3xl" id="menuIcon">menu</span>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown Menu (Absolute) -->
+    <div id="mobileMenu" class="md:hidden absolute left-0 right-0 top-full mt-8 transition-all duration-300 ease-in-out opacity-0 invisible -translate-y-2 z-50">
+      <div class="bg-card-dark/95 backdrop-blur-md rounded-lg border border-border-dark shadow-xl overflow-hidden">
+        <div class="flex flex-col space-y-1 p-4">
+          <a class="text-primary text-base font-medium underline underline-offset-4 py-3 px-2 hover:bg-white/5 rounded" href="{% url 'index' %}">Home</a>
+          <a class="text-white text-base font-medium hover:text-primary transition-colors py-3 px-2 hover:bg-white/5 rounded" href="{% url 'celebrity_list' %}">Browse</a>
+          <a class="text-white text-base font-medium hover:text-primary transition-colors py-3 px-2 hover:bg-white/5 rounded" href="{% url 'aboutus' %}">About Us</a>
+          <a class="text-white text-base font-medium hover:text-primary transition-colors py-3 px-2 hover:bg-white/5 rounded" href="{% url 'info' %}">How It Works</a>
+          <a class="text-white text-base font-medium hover:text-primary transition-colors py-3 px-2 hover:bg-white/5 rounded" href="{% url 'contactus' %}">Contact Us</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </header>
-
 <div id="mobile-dropdown" class="hidden md:hidden absolute top-20 left-0 w-full bg-surface-dark border-b border-white/5 shadow-xl z-50">
     <div class="max-w-7xl mx-auto px-8 py-4 flex flex-col gap-2">
         <a href="{% url 'dashboard' %}" class="block py-3 px-4 rounded-lg hover:bg-white/5 text-white font-bold transition-colors">Dashboard</a>
@@ -190,7 +210,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <h3 class="text-lg font-bold">{{ celeb.name }}</h3>
 <p class="text-xs text-slate-400 font-medium">{{ celeb.category }}</p>
 </div>
-<p class="text-sm font-black text-primary">{{ celeb.price_range }}</p>
+<p class="text-sm font-black text-primary"><span>{{ celeb.currency }}</span>{{ celeb.price_range }}</p>
 </div>
 <div class="mt-4 flex items-center gap-4">
 <div class="flex items-center gap-1.5">
@@ -628,5 +648,19 @@ document.addEventListener('DOMContentLoaded', function() {
     setupSearchFunctionality();
 });
 </script>
+
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/69ae23c314565f1c35628865/1jj83nd26';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
 </body>
 </html>
